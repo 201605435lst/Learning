@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        5、promise如何串联多个操作任务
+            （1）、promise的then（）返回一个新的Promise，可以形成then（）的链式调用；
+            （2）、通过then的链式调用串联多个同步 /异步任务；
+        */
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          console.log('开始任务1（异步）');
+          resolve("我是test1开始");
+        }, 2000);
+      })
+        .then(value => {
+          console.log('返回任务1的结果：' + value);
+          console.log('开始执行任务2（同步）');
+          return '我是test2开始';
+        })
+        .then(value => {
+          console.log('返回任务2的结果' + value);
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              console.log('开始任务3（异步）');
+              resolve("我是test3开始");
+            }, 2000);
+          });
+        })
+        .then(value => {
+          console.log('返回任务3的结果：' + value);
+        });
+    </script>
+  </body>
+</html>

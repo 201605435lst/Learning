@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 1、async函数
+              ①、函数的返回值为promise对象
+              ②promise的对象的结果由async函数执行的返回值决定
+             2、await表达式
+              wait右侧的表达式一般为promise对象，但也可以是其他的值
+              如果表表达式是promise对象，await返回的是promise成功的值
+              如果表达式是其他值，直接将此值作为await的返回值
+              3、注意：
+              ①、await必须写在async函数中,但async中可以没有await
+              ②、如果await的promise失败了，就会抛出异常。要通过try...catch来捕获处理
+          */
+      function fn() {
+        return 1;
+      }
+      const result = fn();
+      console.log(result);
+      /*
+          async 函数的返回值是一个promise对象
+          async函数返回的promise的结果由函数执行的结果决定
+        */
+      async function fn1() {
+        return 1;
+      }
+      const result1 = fn1();
+      console.log(result1);
+      result1.then(
+        value => {
+          console.log(value);
+        },
+        reason => {
+          console.log(reason);
+        },
+      );
+
+      async function fn2() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(8888);
+          }, 2000);
+        });
+      }
+      const result2 = fn2();
+      console.log(result2);
+      result2.then(
+        value => {
+          console.log(value);
+        },
+        reason => {
+          console.log(reason);
+        },
+      );
+
+      /* =========================================================================== */
+      console.log('fn4开始');
+
+      function fn4() {
+        console.log('fn4里面');
+
+        return new Promise((resolve, reject) => {
+          console.log('fn4的promise里面');
+
+          setTimeout(() => {
+            console.log('fn4的promise里面的定时器');
+
+            resolve(99999);
+          }, 2000);
+        });
+      }
+
+      console.log('fn4结束');
+
+      async function fn5() {
+        console.log('fn5里面');
+
+        const value = await fn4();/*  */
+        console.log('fn5里面得到value的值');
+        console.log(value);
+      }
+      console.log('执行函数F5');
+      fn5();
+      console.log('fn5结束');
+      /* ================================================================================== */
+      function fn6() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject(55555);
+          }, 2000);
+        });
+      }
+      async function fn7() {
+        try {
+          const value = await fn6();
+          console.log(value);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fn7();
+    </script>
+  </body>
+</html>

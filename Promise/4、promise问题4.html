@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        4、promise.then()返回的新promise状态由什么决定？
+            （1）、由then（）指定的回调函数执行的结果决定；
+            （2）、详细表达：
+                    ①.如果抛出异常，新promise变为rejected,reason为抛出的异常；
+                    ②.如果返回的是非promise的任意值，新promise变为resolved,value为返回的值；
+                    ③。如果返回的是另一个Promise,此promise的结果会成为新Promise的结果；
+        
+        */
+       // ①.如果抛出异常，新promise变为rejected,reason为抛出的异常；返回结果为5；
+       new Promise((resolve,reject)=>{
+            resolve (1);
+       }).then(
+           value=>{
+                throw 5;
+           },
+           reason=>{
+            console.log("onRejected1",reason);
+           }
+       ).then(
+           value=>{
+            console.log("onResolved1",value);
+           },
+           reason=>{
+            console.log("onRejected2",reason);
+           }
+       )
+      // ②.如果返回的是非promise的任意值，新promise变为resolved,value为返回的值；返回结果为11；
+      new Promise((resolve,reject)=>{
+            resolve (1);
+       }).then(
+           value=>{
+                return 11;
+           },
+           reason=>{
+            console.log("onRejected1",reason);
+           }
+       ).then(
+           value=>{
+            console.log("onResolved1",value);
+           },
+           reason=>{
+            console.log("onRejected2",reason);
+           }
+       )
+      // ③。如果返回的是另一个Promise,此promise的结果会成为新Promise的结果；返回结果为111；
+      new Promise((resolve,reject)=>{
+            resolve (1);
+       }).then(
+           value=>{
+                return Promise.resolve(111)
+           },
+           reason=>{
+            console.log("onRejected1",reason);
+           }
+       ).then(
+           value=>{
+            console.log("onResolved1",value);
+           },
+           reason=>{
+            console.log("onRejected2",reason);
+           }
+       )
+    </script>
+</body>
+</html>

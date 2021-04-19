@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        1)、同步回调
+        理解：立即执行，完全执行完了才结束，不会放入回调队列中，一上来就来执行；
+        列子：数组遍历的回调函数/ promise的excutor函数
+        2）、异步回调
+        理解：不会立即执行，会放入回调队列中将来执行
+        列子：定时器回调 /ajax回调/promise的成功|失效的回调
+        */
+      //1、同步回调函数
+      const arr = [1, 3, 5];
+      arr.forEach(item => {
+        console.log(item);
+      }); //遍历的回调函数，同步回调函数，不会放入队列中
+      // item=>{} 是回调函数
+      // 1、是不是我定义的？：是；2、我有亲自去掉吗？：没有；3、他会不会执行？：会
+      console.log('Foreach之后');
+
+      
+      // 2、异步回调函数
+      setTimeout(() => { //异步回调函数，会放入队列中将来执行
+        console.log('setTimeOut callback()');
+      }, 0);  // A后执行
+      console.log('setTimeOut callback()之后执行');   // B先执行
+    </script>
+  </body>
+</html>

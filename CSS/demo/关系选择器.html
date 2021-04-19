@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*
+            父元素：
+                    直接包含子元素的元素叫父元素
+            子元素：
+                    直接被父元素包含的元素是子元素
+            祖先元素：
+                    直接或间接包含后代的元素叫祖先元素
+                    一个元素的父元素也是祖先元素
+            后代元素：
+                    直接或间接被祖先元素包含的元素        
+            兄弟元素：
+                    拥有相同元素的父元素是兄弟元素 */
+      /* 为div元素的子元素span设置红色 */
+      /* 子元素选择器
+                        作用：选中指定父元素的指定子元素
+                        语法：父元素>子元素
+        */
+      /* div > span {
+        color: red;
+      } */
+      /* 找div中的子元素p,再找p中的子元素span */
+      /* div > p > span {
+        color: rgb(112, 218, 177);
+      } */
+      /* 后代元素选择器
+                        作用：选中指定元素内的所有后代元素
+                        语法：祖先 后代
+ /* 选择div中的所有span */
+   /* div span {
+        font-size: 22px;
+        color: orange;
+      } */
+
+      /* 选择下一个兄弟
+            语法：前一个+下一个  
+      */
+      /* 只选择p标签的下一个标签span，后面的span 标签不起作用 */
+      /* p + span {
+        color: purple;
+      } */
+   /* 选择下面所有的兄弟
+            语法：兄~弟  
+      */
+      /* 选择p标签后的所有标签span */
+      p ~ span {
+        color: rgb(128, 30, 0);
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div>
+      我是div
+
+      <p>
+        我是div中的p元素
+        <span>我是p中的span元素</span>
+       
+      </p>
+      <span>我是p中的span元素1</span>
+      <span>我是p中的span元素2</span>
+      <span>我是p中的span元素3</span>
+      <span>我是p中的span元素5</span>
+      <span>我是p中的span元素6</span>
+    </div>
+  </body>
+</html>

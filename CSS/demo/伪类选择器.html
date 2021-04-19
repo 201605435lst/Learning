@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 将ul的第一个li设置成红色*/
+      /* 伪类（不存在的类，特殊的类）
+                用来描述一个元素的特殊状态
+                比如：第一个元素；被点击的元素；鼠标移入的元素，也就是元素所处的特殊状态；
+                特点：一般情况下都是使用：开头
+
+        */
+      /* 
+        :first-child:第一个元素
+        :last-child:最后一个元素
+        :nth-child(n):选中第n个子元素
+        以上这些伪类都是依据所有的子元素进行排序的
+         */
+      /* ul>li:first-child{
+            color:red
+        }
+        ul>li:nth-child(3){
+            color: rgb(43, 226, 73);
+        } */
+      /* 
+        将所有的ul标签中的li 颜色设置为绿色，除了第三个
+        结果：内容1不发生变化
+        */
+      ul > li:not(:nth-child(3)) {
+        color: chartreuse;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <span>我是span</span>
+      <li>内容0</li>
+      <li>内容1</li>
+      <li>内容2</li>
+      <li>内容3</li>
+      <li>内容4</li>
+      <li>内容5</li>
+    </ul>
+
+    <a href="https:www.baidu.com">访问过的链接</a>
+    <br/>
+    <a href="https:www.baidu123.com">没有访问过的链接</a>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* []  选择还有指定属性的元素 */
+      /* 存在title属性的p元素 */
+      /* p[title]{
+            color: orange;
+        }
+        p[title=p1]{
+            color: rgb(255, 0, 140);
+        }
+        p[title ^=abc]{
+            color: rgb(76, 0, 255);
+        } */
+      /* 存在title属性的值以ww结尾的p元素 */
+      /* p[title $=ww]{
+            color: rgb(255, 38, 0);
+        } */
+      /* 存在title属性的值中含有abc的p元素 */
+      p[title*=abc] {
+        color: rgb(255, 38, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <p title="p">我是p---------------</p>
+    <p title="p1">我是p1---------------</p>
+    <p title="p">我是p2---------------</p>
+    <p title="abcvf">我是p3---------------</p>
+    <p title="abcwe">我是p4---------------</p>
+    <p title="abcredf">我是p5---------------</p>
+    <p title="abcredfww">我是p6---------------</p>
+    <p>我是p7---------------</p>
+  </body>
+</html>
