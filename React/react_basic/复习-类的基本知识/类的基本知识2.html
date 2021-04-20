@@ -24,7 +24,32 @@
           console.log(`我叫${this.name},年龄${this.age}岁`);
         }
       }
+      class Student extends Person{
+        constructor(name,age,grade){
+          super(name, age)
+          this.grade=grade;
+        }
+        speak(){
+          console.log(`我叫${this.name},年龄${this.age}岁,我读的是${this.grade}`);
+        }
+        study(){
+          /*  
+              speak方法放在了哪里？----类的原型对象上，供实例使用
+              通过student实例调用study时，study中的this就是Student实例
+          */
+          console.log("我很努力的学习");
+        }
+      }
+      /* 总结：
+            1.类中的构造器不是必须写的，要对实例进行一些初始化的操作，如添加指定属性时才写
+            2.如果A类继承了B类，且A类写了构造器，那么A类构造器中的super是必须要写的
+            3.类中所定义的方法都是放在了类的原型对象上，供实例去使用
       
+      */
+      const  student=new Student("小张",21,"高一")
+      console.log(student);
+      student.speak()
+      student.study()
     </script>
   </body>
 </html>

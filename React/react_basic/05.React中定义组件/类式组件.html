@@ -17,14 +17,19 @@
     <script src="../js/babel.min.js"></script>
 
     <script type="text/babel">
-     function MyComponent(){
-         console.log(this);//此处的this是undefined，因为babel编译后开启了严格模式
-         return (<h2>我是用函数定义的组件【适用于简单组件的使用】</h2>)
-     }
+    /* 创建类式组件 */
+         class MyComponent extends React.Component{
+             //render是放在哪里的？------Mycomponent的原型对象上，供实例使用
+             //render中的this是谁？------Mycomponent的示列对象<=>Mycomponent组件实例对象
+             render(){
+                return (<h2>我是用类定义的组件【适用于复杂组件的使用】</h2>)
+             }
+         } 
      ReactDOM.render(<MyComponent/>,document.getElementById("test"))
      /* 执行了 ReactDOM.render(<MyComponent/>...之后发生了什么？
             1.React解析组件标签，找到了MyComponent组件
-            2.发现组件是用函数定义的，随后调用该函数，将返回的DOM转化为真实的DOM，随后呈现在页面中
+            2.发现组件是用类定义的，随后new出该类的实例，并且通过该实例调用到原型上的render方
+            3.将render返回的DOM转化为真实的DOM，随后呈现在页面中
       */
     </script>
   </body>
