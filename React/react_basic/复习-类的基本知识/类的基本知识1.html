@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>类的基本知识1</title>
+  </head>
+  <body>
+    <script>
+      //创建一个person类
+      class Person {
+          //person类的构造器
+        constructor(name, age) {
+            /* 构造方法中的this是谁？ -----类的实例对象 */
+          this.name = name;
+          this.age = age;
+        }
+        speak() {
+            /*
+             speak方法放在了哪里？----类的原型对象上，供实例使用
+             通过person实例调用speak时，speak的this就是person实例
+            */
+          console.log(`我叫${this.name},年龄${this.age}岁`);
+        }
+      }
+      const p1 = new Person("tom", 17);
+      console.log(p1);
+      p1.speak();
+    </script>
+  </body>
+</html>

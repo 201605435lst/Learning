@@ -1,4 +1,22 @@
-## 1、什么是react
+- [目录](#目录)
+  
+  - [1.什么是react](#1什么是react)
+  
+  - [2.React的Hello Word](#2react的hello-word)
+  
+  - [3.Js的Hello React](#3js的hello-react)
+  
+  - [4.真实DOM与虚拟DOM](#4真实dom与虚拟dom)
+  
+  - [5.React中使用JSX](#5react中使用jsx)
+  
+  - [6.模块与组件、模块化与组件化的区别](#6模块与组件模块化与组件化的区别)
+  
+  - [7.函数式组件](#7.函数式组件)
+  
+    
+
+## 1.什么是react
 
 1. **React**是用于构建用户界面的JAvaScript库（是一个将数据渲染为HTML视图的开源JavaScript库）
 
@@ -81,7 +99,7 @@
   </body>
 ```
 
-## 3.真实DOM与虚拟DOM
+## 4.真实DOM与虚拟DOM
 
   **关于虚拟DOM**:
 
@@ -119,7 +137,7 @@
   </body>
 ```
 
-## 4.React中使用JSX
+## 5.React中使用JSX
 
 ​     React 使用 JSX 来替代常规的 JavaScript
 
@@ -131,6 +149,112 @@
 JSX 执行更快，因为它在编译为 JavaScript 代码后进行了优化。
 它是类型安全的，在编译过程中就能发现错误。
 使用 JSX 编写模板更加简单快速。
+```
+
+```
+JSX语法规则：
+        1.定义虚拟DOM时，不要写引号；
+        2.标签中混入js表达式时需要使用{}
+        3.样式的类名指定不要用class,要用className
+        4.内联样式，要用style={{key:value}}的形式去写
+        5.只有一个根标签；
+        6.标签必须闭合
+        7.标签首字母：
+          （1)若小写字母开头，则将标签改为html对应的同名元素，若html中无对应的同名元素，则报错；
+          （2）若大写字母开头，React就会渲染对应的组件，若组件没有定义，则报错；
+```
+
+```
+ 一定注意区分：【js语句（代码）】和【Js表达式】
+                1.Js表达式：一个表达式都会产生一个值，可以放在任何一个需要值的地方；
+                    下面这些都是表达式：
+                        （1)、a
+                         (2)、a+b
+                         (3)、demo(1)
+                         (4)、arr.map()
+                         (5)、function test(){}
+                2.js语句：
+                    下面这些都是语句（代码）
+                        （1).if(){}
+                        （2).for(){}
+                        （3).switch(){case:xxxx}
+```
+
+```
+<script type="text/babel">
+      const myId = "teSt";
+      const content = "Hello ReAct";
+      //此处一定要写babel
+      /* 1、创建虚拟DOM */
+      const VDOM = (
+       <div>
+        <h2 id={myId.toLowerCase()} className="title">
+          <span style={{color:"white",fontSize:"29px"}}>{content.toLowerCase()}</span>
+        </h2>
+        <input type="text"/>
+        </div>
+      );
+      /* 渲染虚拟DOM到页面 */
+      ReactDOM.render(VDOM, document.getElementById("test"));
+    </script>
+```
+
+```
+const data = ["Angular", "React", "Vue"];
+      /* 1.创建虚拟DOM */
+      const VDOM = (
+        <div>
+          <h2>前端JS框架列表</h2>
+          <ul>
+            {data.map((item,index) => 
+              <li key={index}>{item}</li>
+            )}
+          </ul>
+        </div>
+      );
+ ReactDOM.render(VDOM,document.getElementById("test"))
+```
+
+## 6.模块与组件、模块化与组件化的区别
+
+```
+模块：向外提供特定功能的js程序，一般就是一个js文件
+作用：复用js，简化js的编写，提高js运行效率
+```
+
+```
+组件：用来实现局部功能效果的代码和资源的集合（html/css/js/image）
+作用：复用编码，简化项目编码，提高运行效率
+```
+
+```
+模块化：当应用的js都以模块来编写的，这个应用就是一个模块化的应用
+```
+
+```
+组件化：当应用是以多组件的方式实现，这个应用就是一个组件化的应用
+```
+
+## 7.函数式组件
+
+```
+<script type="text/babel">
+     function MyComponent(){
+         console.log(this);//  此处的this是undefined，因为babel编译后开启了严格模式
+         return (<h2>我是用函数定义的组件【适用于简单组件的使用】</h2>)
+     }
+     ReactDOM.render(<MyComponent/>,document.getElementById("test"))
+     /* 执行了 ReactDOM.render(<MyComponent/>...之后发生了什么？
+            1.React解析组件标签，找到了MyComponent组件
+            2.发现组件是使用函数定义的，随后调用该函数，将返回的DOM转化为真实的DOM，随后呈现在页面中
+      */
+    </script>
+```
+
+## 8.类的基本知识
+
+```
+
 ```
 
 

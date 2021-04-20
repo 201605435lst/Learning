@@ -39,8 +39,8 @@
         <div>
           <h2>前端JS框架列表</h2>
           <ul>
-            {data.map((item) => 
-              <li>{item}</li>
+            {data.map((item,index) => 
+              <li key={index}>{item}</li>
             )}
           </ul>
         </div>
