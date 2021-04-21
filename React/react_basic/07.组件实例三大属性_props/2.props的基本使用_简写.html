@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>props的基本使用_简写</title>
+  </head>
+  <body>
+    <!-- 贮备好一个“容器” -->
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，引入支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      /* 创建一个组件 */
+      class Person extends React.Component {
+       static propTypes = {
+          name: PropTypes.string.isRequired, //限制name必传，且为字符串
+          age: PropTypes.number, //限制age为数字
+          sex: PropTypes.string, //限制性别为字符串
+          speak: PropTypes.func, //限制speak为函数
+        };
+        /* 指定标签默认属性值 */
+        /* 若不加static,这个属性加在了类的实例上，没有加给类的本身 */
+        static defaultProps = {
+          age: 30,
+          sex: "男",
+        };
+        /* 初始化状态 */
+        state={}
+        
+        render() {
+          console.log(this);
+          const { name, age, sex } = this.props;
+          //this.props.age=age+1;//此代码会报错，因为props是只读的
+          return (
+            <ul>
+              <li>{name}</li>
+              <li>{sex}</li>
+              <li>{age + 1}</li>
+            </ul>
+          );
+        }
+      }
+      /* 对标签属性进行类型必要性的限制 */
+
+      const p = { name: "小张", age: 26, sex: "男" };
+      /* 渲染组件到页面 */
+      ReactDOM.render(<Person name="小王" />, document.getElementById("test"));
+      ReactDOM.render(
+        <Person name="小明" age={15} sex="男" />,
+        document.getElementById("test1")
+      );
+      ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
+
+      function speak() {
+        console.log("我说话了");
+      }
+    </script>
+  </body>
+</html>

@@ -471,3 +471,135 @@ const data = ["Angular", "React", "Vue"];
     </script>
 ```
 
+## 14.展开运算符（reduce的使用）
+
+​		1. 展开运算符不能展开对象
+
+```
+        /* 计算和 */
+        function sum(...numbers){
+            return numbers.reduce((preventValue,currentValue)=>{
+               return  preventValue+currentValue
+            })
+        }
+        console.log(sum(1,2,3,4,5));
+
+        let Person={name:'小张',age:'20'}
+        let Person2={...Person}
+        console.log(Person);//相当于给Person2复制了一个Person
+        console.log(...Person);//报错，展开语法不能展开对象
+```
+
+## 15.组件实例三大属性_props
+
+```
+<script type="text/babel">
+      /* 创建一个组件 */
+      class Person extends React.Component {
+        render() {
+         //this.props.age=age+1;//此代码会报错，因为props是只读的
+         
+          const { name, age, sex } = this.props;
+          return (
+            <ul>
+              <li>{name}</li>
+              <li>{sex}</li>
+              <li>{age+1}</li>
+            </ul>
+          );
+        }
+      }
+      Person.propTypes={
+          name:PropTypes.string.isRequired,//限制name必传，且为字符串
+          age:PropTypes.number,//限制age为数字
+          sex:PropTypes.string,//限制性别为字符串
+          speak:PropTypes.func,//限制speak为函数
+      }
+      Person.defaultProps={
+          age:30,
+          sex:'男'
+      }
+
+      const p = { name: "小张", age: 26, sex: "男" };
+      ReactDOM.render(
+        <Person name="小王"  />,
+        document.getElementById("test")
+      );
+      ReactDOM.render(
+        <Person name="小明" age={15} sex="男" />,
+        document.getElementById("test1")
+      );
+      ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
+
+      function speak(){
+          console.log("我说话了");
+      }
+    </script>
+```
+
+## 16.组件实例三大属性_props简写
+
+```
+  static propTypes = {
+          name: PropTypes.string.isRequired, //限制name必传，且为字符串
+          age: PropTypes.number, //限制age为数字
+          sex: PropTypes.string, //限制性别为字符串
+          speak: PropTypes.func, //限制speak为函数
+        };
+        /* 指定标签默认属性值 */
+        /* 若不加static,这个属性加在了类的实例上，没有加给类的本身 */
+        static defaultProps = {
+          age: 30,
+          sex: "男",
+        };
+```
+
+```
+ <script type="text/babel">
+      /* 创建一个组件 */
+      class Person extends React.Component {
+       static propTypes = {
+          name: PropTypes.string.isRequired, //限制name必传，且为字符串
+          age: PropTypes.number, //限制age为数字
+          sex: PropTypes.string, //限制性别为字符串
+          speak: PropTypes.func, //限制speak为函数
+        };
+        /* 指定标签默认属性值 */
+        /* 若不加static,这个属性加在了类的实例上，没有加给类的本身 */
+        static defaultProps = {
+          age: 30,
+          sex: "男",
+        };
+        /* 初始化状态 */
+        state={}
+        
+        render() {
+          console.log(this);
+          const { name, age, sex } = this.props;
+          //this.props.age=age+1;//此代码会报错，因为props是只读的
+          return (
+            <ul>
+              <li>{name}</li>
+              <li>{sex}</li>
+              <li>{age + 1}</li>
+            </ul>
+          );
+        }
+      }
+      /* 对标签属性进行类型必要性的限制 */
+
+      const p = { name: "小张", age: 26, sex: "男" };
+      /* 渲染组件到页面 */
+      ReactDOM.render(<Person name="小王" />, document.getElementById("test"));
+      ReactDOM.render(
+        <Person name="小明" age={15} sex="男" />,
+        document.getElementById("test1")
+      );
+      ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
+
+      function speak() {
+        console.log("我说话了");
+      }
+    </script>
+```
+

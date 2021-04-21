@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 计算和 */
+      function sum(...numbers) {
+        return numbers.reduce((preventValue, currentValue) => {
+          return preventValue + currentValue;
+        });
+      }
+      console.log(sum(1, 2, 3, 4, 5));
+      /* 构造字面量数组时使用展开语法 */
+      let Person = { name: "小张", age: "20" };
+      let Person2 = { ...Person };
+      console.log(Person); //相当于给Person2复制了一个Person
+      console.log(...Person); //报错，展开语法不能展开对象
+    </script>
+  </body>
+</html>
