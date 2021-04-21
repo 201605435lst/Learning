@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.setState的使用_简写</title>
+  </head>
+  <body>
+    <!-- 贮备好一个“容器” -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，引入支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      class Weather extends React.Component {
+        /* 初始化状态 */
+          state = { isHot: true };
+        render() {
+          return (
+            <h1 onClick={this.changeWeather}>
+              今天天气很{this.state.isHot ? "炎热" : "凉爽"}
+            </h1>
+          );
+        }
+        /*
+        自定义方法：
+          ①.要用赋值语句的形式+箭头函数
+          ②.将changeWeather放在了实例自身上，而不是原型上 
+          ③.箭头函数的this指向外层函数
+        */
+        changeWeather=()=>{
+          console.log(this);
+           const isHot=this.state.isHot;
+           this.setState({isHot:!isHot})
+        }
+      }
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+
+    </script>
+  </body>
+</html>

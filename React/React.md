@@ -250,5 +250,224 @@ const data = ["Angular", "React", "Vue"];
 2. 如果A类继承了B类，且A类写了构造器，那么A类构造器中的super是必须要写的
 3. 类中所定义的方法都是放在了类的原型对象上，供实例去使用
 
+```
+<script>
+      //创建一个person类
+      class Person {
+          //person类的构造器
+        constructor(name, age) {
+            /* 构造方法中的this是谁？ -----类的实例对象 */
+          this.name = name;
+          this.age = age;
+        }
+        speak() {
+            /*
+             speak方法放在了哪里？----类的原型对象上，供实例使用
+             通过person实例调用speak时，speak的this就是person实例
+            */
+          console.log(`我叫${this.name},年龄${this.age}岁`);
+        }
+      }
+      class Student extends Person{
+        constructor(name,age,grade){
+          super(name, age)
+          this.grade=grade;
+        }
+        speak(){
+          console.log(`我叫${this.name},年龄${this.age}岁,我读的是${this.grade}`);
+        }
+        study(){
+          /*  
+              speak方法放在了哪里？----类的原型对象上，供实例使用
+              通过student实例调用study时，study中的this就是Student实例
+          */
+          console.log("我很努力的学习");
+        }
+      }
+      /* 总结：
+            1.类中的构造器不是必须写的，要对实例进行一些初始化的操作，如添加指定属性时才写
+            2.如果A类继承了B类，且A类写了构造器，那么A类构造器中的super是必须要写的
+            3.类中所定义的方法都是放在了类的原型对象上，供实例去使用
+      
+      */
+      const  student=new Student("小张",21,"高一")
+      console.log(student);
+      student.speak()
+      student.study()
+    </script>
+```
 
+## 9.类式组件
+
+```
+<script type="text/babel">
+    /* 创建类式组件 */
+         class MyComponent extends React.Component{
+             //render是放在哪里的？------Mycomponent的原型对象上，供实例使用
+             //render中的this是谁？------Mycomponent的示列对象<=>Mycomponent组件实例对象
+             render(){
+                return (<h2>我是用类定义的组件【适用于复杂组件的使用】</h2>)
+             }
+         } 
+     ReactDOM.render(<MyComponent/>,document.getElementById("test"))
+     /* 执行了 ReactDOM.render(<MyComponent/>...之后发生了什么？
+            1.React解析组件标签，找到了MyComponent组件
+            2.发现组件是用类定义的，随后new出该类的实例，并且通过该实例调用到原型上的render方
+            3.将render返回的DOM转化为真实的DOM，随后呈现在页面中
+      */
+    </script>
+```
+
+## 10.组件实例三大属性_state
+
+1. state是组件对象最重要的属性, 值是对象(可以包含多个key-value的组合)
+
+2. 组件被称为"状态机", 通过更新组件的state来更新对应的页面显示(重新渲染组件)
+
+```
+强烈注意
+     1.组件中render方法中的this为组件实例对象
+     2.组件自定义的方法中this为undefined，如何解决？
+         a)强制绑定this: 通过函数对象的bind()
+         b)箭头函数
+     3.状态数据，不能直接修改或更新
+```
+
+```
+<script type="text/babel">
+      class Weather extends React.Component {
+        constructor(props) {
+          /* 此处this指向weather的实例对象 */
+          super(props);
+          this.state = { isHot: true };
+          console.log(this);
+          //解决changeWeather中this指向问题
+          this.weatherEvent=this.changeWeather.bind(this)
+        }
+        render() {
+          /* 此处this指向weather的实例对象 */
+          return (
+            <h1 onClick={this.weatherEvent}>
+              今天天气很{this.state.isHot ? "炎热" : "凉爽"}
+            </h1>
+          );
+        }
+        /* 此处changeWeather不是通过Weather调用的，需考虑this指向 */
+        changeWeather(){
+          console.log("来了");
+          /* 
+            changeWeather放在那里？------Weather的原型对象上，供实例使用
+            由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+            类中的方法默认开启了严格模式，所以changeWeather中的this为undefind，需要考虑this指向
+          */
+          console.log(this);
+        }
+      }
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+
+    </script>
+```
+
+## 11.类中的方法this指向
+
+```
+<script>
+      class Person{
+          constructor(name,age){
+              this.name=name
+              this.age=age
+          }
+          speak(){
+               /*  
+              speak方法放在了哪里？----类的原型对象上，供实例使用
+              通过Person实例调用study时，study中的this就是Person实例
+                */
+              console.log(this);
+          }
+      }
+        const p1=new Person("小明",25)
+        p1.speak()//通过实例调用speak方法
+        const t1=p1.speak
+        t1()//   输出undefind
+    </script>
+```
+
+## 12.setState的使用
+
+​      **特别提醒，状态必须通过setState来更改状态，且更新是一种合并，不是替换**
+
+```
+ <script type="text/babel">
+      class Weather extends React.Component {
+        /* 构造器调用1次 */
+        constructor(props) {
+          /* 此处this指向weather的实例对象 */
+          super(props);
+          this.state = { isHot: true };
+          console.log(this);
+          //解决changeWeather中this指向问题
+          this.weatherEvent=this.changeWeather.bind(this)
+        }
+        /* render调用i+n次   n是状态更新的次数 */
+        render() {
+          /* 此处this指向weather的实例对象 */
+          return (
+            <h1 onClick={this.weatherEvent}>
+              今天天气很{this.state.isHot ? "炎热" : "凉爽"}
+            </h1>
+          );
+        }
+        /* 此处changeWeather不是通过Weather调用的，需考虑this指向 */
+        changeWeather(){
+          /* 
+            changeWeather放在那里？------Weather的原型对象上，供实例使用
+            由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+            类中的方法默认开启了严格模式，所以changeWeather中的this为undefind，需要考虑this指向
+          */
+           const isHot=this.state.isHot;
+           /* 特别提醒，状态必须通过setState来更改状态，且更新是一种合并，不是替换 */
+           this.setState({isHot:!isHot})
+          /* 严重注意：状态不可直接更改，下面这行就是直接更改 */
+          // this.state.isHot=!isHot   /* 错误写法 */
+        }
+      }
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+
+    </script>
+```
+
+## 13.setState的使用简写
+
+自定义方法
+          ①. 要用赋值语句的形式+箭头函数
+          ②. 将changeWeather放在了实例自身上，而不是原型上 
+
+​          ③.箭头函数的this指向外层函数
+
+```
+<script type="text/babel">
+      class Weather extends React.Component {
+        /* 初始化状态 */
+          state = { isHot: true };
+        render() {
+          return (
+            <h1 onClick={this.changeWeather}>
+              今天天气很{this.state.isHot ? "炎热" : "凉爽"}
+            </h1>
+          );
+        }
+        /*
+        自定义方法：
+          ①.要用赋值语句的形式+箭头函数
+          ②.将changeWeather放在了实例自身上，而不是原型上 
+        */
+        changeWeather=()=>{
+          console.log(this);
+           const isHot=this.state.isHot;
+           this.setState({isHot:!isHot})
+        }
+      }
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+    </script>
+```
 
