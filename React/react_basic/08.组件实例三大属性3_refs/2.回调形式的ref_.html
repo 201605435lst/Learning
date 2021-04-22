@@ -21,37 +21,29 @@
     <script src="../js/prop-types.js"></script>
 
     <script type="text/babel">
-      /* 创建一个组件MyComponent */
+      /* 创建一个类组件 */
       class MyComponent extends React.Component {
-        showData1 = () => {
-         console.log(this);
-          const input1 = this.refs.input1;
-          alert(input1.value);
-        };
-        showData2 = () => {
-          /* 解构赋值 */
-          const { input2 } = this.refs;
-          alert(input2.value);
-        };
+        showData1=()=>{
+            console.log(this);
+                const {input1}=this
+                alert(input1.value)
+            }
+            showData2=()=>{
+                const input2=this.input2
+                alert(input2.value)
+            }
         render() {
           return (
             <div>
-              <input ref="input1" placeholder="点击按钮提示输入的内容" />
+              <input ref={(currentNode)=>this.input1=currentNode} placeholder="请点击按钮提示左侧输入的内容" />
               &nbsp;
-              <button onClick={this.showData1}>点我提示左侧输入框的值</button>
-              &nbsp;
-              <input
-                onBlur={this.showData2}
-                ref="input2"
-                placeholder="失去焦点提示输入的内容"
-                ref="input2"
-              />
-              &nbsp;
+              <button onClick={this.showData1}>点击显示左侧的内容</button>&nbsp;
+              <input onBlur={this.showData2} ref={(c)=>this.input2=c} placeholder="失去焦点显示输入的内容" />
             </div>
           );
         }
       }
-      ReactDOM.render(<MyComponent />, document.getElementById("test"));
+      ReactDOM.render(<MyComponent/>,document.getElementById('test'))
     </script>
   </body>
 </html>

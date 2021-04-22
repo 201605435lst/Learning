@@ -442,7 +442,7 @@ const data = ["Angular", "React", "Vue"];
           ①. 要用赋值语句的形式+箭头函数
           ②. 将changeWeather放在了实例自身上，而不是原型上 
 
-​          ③.箭头函数的this指向外层函数
+​         ③. 箭头函数的this指向外层函数
 
 ```
 <script type="text/babel">
@@ -681,5 +681,73 @@ console.log(b); // 20
 console.log(a); // 10
 console.log(b); // 20
 console.log(rest); // {c: 30, d: 40}
+```
+
+## 20.组件实例三大属性_refs(字符串形式)
+
+```
+ <script type="text/babel">
+      /* 创建一个组件MyComponent */
+      class MyComponent extends React.Component {
+        showData1 = () => {
+          console.log(this.refs);
+          const input1 = this.refs.input1;
+          alert(input1.value);
+        };
+        showData2 = () => {
+          /* 解构赋值 */
+          const { input2 } = this.refs;
+          alert(input2.value);
+        };
+        render() {
+          return (
+            <div>
+              <input ref="input1" placeholder="点击按钮提示输入的内容" />
+              &nbsp;
+              <button onClick={this.showData1}>点我提示左侧输入框的值</button>
+              &nbsp;
+              <input
+                onBlur={this.showData2}
+                ref="input2"
+                placeholder="失去焦点提示输入的内容"
+                ref="input2"
+              />
+              &nbsp;
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<MyComponent />, document.getElementById("test"));
+    </script>
+```
+
+## 21.组件实例三大属性_refs(字符串形式)
+
+```
+<script type="text/babel">
+      /* 创建一个类组件 */
+      class MyComponent extends React.Component {
+        showData1=()=>{
+            console.log(this);
+                const {input1}=this
+                alert(input1.value)
+            }
+            showData2=()=>{
+                const input2=this.input2
+                alert(input2.value)
+            }
+        render() {
+          return (
+            <div>
+              <input ref={(currentNode)=>this.input1=currentNode} placeholder="请点击按钮提示左侧输入的内容" />
+              &nbsp;
+              <button onClick={this.showData1}>点击显示左侧的内容</button>&nbsp;
+              <input onBlur={this.showData2} ref={(c)=>this.input2=c} placeholder="失去焦点显示输入的内容" />
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+    </script>
 ```
 
