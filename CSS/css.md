@@ -103,7 +103,15 @@
    <span class="red2 a b c">我是span</span>
    ```
 
-   2. 选择器分组（并集选择器）
+   ```
+   /* 选中元素既是red2又是a,b,c的类*/
+   red2.a.b.c {
+      font-size: 30px;
+   }
+   <span class="red2 a b c">我是span</span>
+   ```
+
+   1. 选择器分组（并集选择器）
       - 作用：同时选择多个选择器对应的元素
       - 择器1,选择器2,选择器3...
 

@@ -595,11 +595,91 @@ const data = ["Angular", "React", "Vue"];
         <Person name="小明" age={15} sex="男" />,
         document.getElementById("test1")
       );
+      /*{}在此处是分隔符，...p在此处能够展开对象是因为react.development+babel就可以展开对象了*/
       ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
 
       function speak() {
         console.log("我说话了");
       }
     </script>
+```
+
+## 17.构造器使用(constractor)
+
+ **构造器是否接收props，是否传递给super,取决于：是否希望在构造器中通过this访问props **
+
+```
+constructor(props){
+          super(props)
+          console.log(this.props);//输出Person
+        } 
+```
+
+```
+ constructor(){
+          console.log(this.props);//报错
+          }
+```
+
+```
+ constructor() {
+          super();
+          console.log(this.props); //undefind
+          }
+```
+
+## 18.函数式组件使用props
+
+```
+<script type="text/babel">
+      /* 创建一个组件 */
+      function Person(props){
+          const {name,sex,age}=props
+        return (
+            <ul>
+              <li>{name}</li>
+              <li>{sex}</li>
+              <li>{age + 1}</li>
+            </ul>
+          );
+      }
+      Person.propTypes={
+        name: PropTypes.string.isRequired, //限制name必传，且为字符串
+        age: PropTypes.number, //限制age为数字
+        sex: PropTypes.string, //限制性别为字符串
+      }
+      Person.defaultProps={
+        sex:'男',
+        age:18,
+      }
+      ReactDOM.render(<Person name="小王" />, document.getElementById("test"));
+    </script>
+```
+
+## 19.解构赋值
+
+**解构赋值**语法是一种 Javascript 表达式。通过**解构赋值,** 可以将属性/值从对象/数组中取出,赋值给其他变量。
+
+```
+var a, b, rest;
+[a, b] = [10, 20];
+console.log(a); // 10
+console.log(b); // 20
+
+[a, b, ...rest] = [10, 20, 30, 40, 50];
+console.log(a); // 10
+console.log(b); // 20
+console.log(rest); // [30, 40, 50]
+
+({ a, b } = { a: 10, b: 20 });
+console.log(a); // 10
+console.log(b); // 20
+
+
+// Stage 4（已完成）提案中的特性
+({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
+console.log(a); // 10
+console.log(b); // 20
+console.log(rest); // {c: 30, d: 40}
 ```
 
