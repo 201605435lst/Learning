@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非受控组件</title>
+  </head>
+  <body>
+    <!-- 贮备好一个“容器” -->
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，引入支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+    class Login extends React.Component{
+        handleLogin=(event)=>{
+            event.preventDefault()
+            const {input1,input2}=this
+            alert(`这个人的用户名是${input1.value},密码是${input2.value}`)
+        }
+        render(){
+            return (
+                <form action="https://wwww.baidu.com" onSubmit={this.handleLogin}>
+                    <input ref={(c)=>this.input1=c} name="username"/><br/>
+                    <input ref={(c)=>this.input2=c} name="password"/><br/>
+                    <button >登录</button>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Login />,document.getElementById('test'))
+    </script>
+  </body>
+</html>

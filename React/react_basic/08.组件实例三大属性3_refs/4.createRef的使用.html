@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 贮备好一个“容器” -->
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom，引入支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/prop-types.js"></script>
+    <script type="text/babel">
+        class Mycomponent extends React.Component{
+            myRef=React.createRef()
+            myRef1=React.createRef()
+            showData=()=>{
+                console.log(this.myRef);
+                alert(this.myRef.current.value)
+            }
+            showData1=()=>{
+                alert(this.myRef1.current.value)
+            }
+            render(){
+                return (
+                    <div>
+                        <input ref={this.myRef} placeholder="请输入"/><br/>
+                        <button onClick={this.showData}>点击显示输入的</button>
+                        <input ref={this.myRef1} onBlur={this.showData1} placeholder="失去焦点显示输入的内容"/>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Mycomponent/>,document.getElementById('test'))
+    </script>
+  </body>
+</html>

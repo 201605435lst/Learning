@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1.字符串形式的ref_</title>
+    <title>Document</title>
   </head>
   <body>
     <!-- 贮备好一个“容器” -->
@@ -19,33 +19,30 @@
     <script src="../js/babel.min.js"></script>
     <!-- 引入prop-types，用于对组件标签属性进行限制 -->
     <script src="../js/prop-types.js"></script>
-
     <script type="text/babel">
-      /* 创建一个类组件 */
       class MyComponent extends React.Component {
-        showData1 = () => {
-          console.log(this);
+        state = { isHot: false };
+        changeWeather = () => {
+          const { isHot } = this.state;
+          this.setState({ isHot: !isHot });
+        };
+        showInfo = () => {
           const { input1 } = this;
-          alert(input1.value);
+          console.log(input1.value);
         };
-        showData2 = () => {
-          const input2 = this.input2;
-          alert(input2.value);
-        };
+        saveInput=(c)=>{
+            this.input1=c
+        }
         render() {
+          const { isHot } = this.state;
           return (
             <div>
-              <input
-                ref={(currentNode) => (this.input1 = currentNode)}
-                placeholder="请点击按钮提示左侧输入的内容"
-              />
-              &nbsp;
-              <button onClick={this.showData1}>点击显示左侧的内容</button>&nbsp;
-              <input
-                onBlur={this.showData2}
-                ref={(c) => (this.input2 = c)}
-                placeholder="失去焦点显示输入的内容"
-              />
+              <h2>今天天气很{isHot ? "炎热" : "寒冷"}</h2>
+              {/*<input ref={(c) => (this.input1 = c)} placeholder="请输入" />*/}
+              <input ref={this.saveInput} placeholder="请输入" />
+              <br />
+              <button onClick={this.showInfo}>点击给出提示</button>
+              <button onClick={this.changeWeather}>改天天气状况</button>
             </div>
           );
         }
