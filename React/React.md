@@ -721,7 +721,7 @@ console.log(rest); // {c: 30, d: 40}
     </script>
 ```
 
-## 21.组件实例三大属性_refs(字符串形式)
+## 21.组件实例三大属性_refs(回调形式)
 
 ```
 <script type="text/babel">
