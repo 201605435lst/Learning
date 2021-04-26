@@ -935,6 +935,21 @@ preventDefault() 方法阻止元素发生默认的行为（例如，当点击提
 ## 28.高阶函数_函数柯里化
 
 ```
+      高阶函数：如果一个函数符合下面两个规范中的任何一个，那该函数就是高阶函数。
+          1.若A函数接收的参数是一个函数，那么该函数就是高阶函数
+          2.若A函数，调用的返回值依然是一个函数，那么A就可以称为高阶函数
+          常见的高阶函数有：Promise、setTimeOut、arr.map()等等
+      函数的柯里化：通过函数调用继续返回函数的方式，实现多次接受参数最后统一处理的函数编码形式
+       function((a)=>{
+              return (b)=>{
+                 return (c)=>{
+                    return a+b+c
+                  }
+                }
+              })
+```
+
+```
 <script type="text/babel">
       class Login extends React.Component {
         state = { password: "", username: "" };
@@ -961,6 +976,102 @@ preventDefault() 方法阻止元素发生默认的行为（例如，当点击提
         }
       }
       ReactDOM.render(<Login />, document.getElementById("test"));
+    </script>
+```
+
+## 29.不使用函数柯里化
+
+```
+<script type="text/babel">
+      class Login extends React.Component {
+        state = {
+          username: null,
+          password: null,
+        };
+        handleLogin = (e) => {
+          e.preventDefault();
+          const { username, password } = this.state;
+          alert(`当前用户的账号是${username},密码是${password}`);
+        };
+        saveData = (type, e) => {
+          this.setState({ [type]: e.target.value });
+        };
+        render() {
+          return (
+            <form action="https://wwww.baidu.com" onSubmit={this.handleLogin}>
+              <input
+                onChange={(e) => {
+                  this.saveData("username", e);
+                }}
+                placeholder="请输入"
+                name="username"
+              />
+              <br />
+              <input
+                onChange={(e) => {
+                  this.saveData("password", e);
+                }}
+                placeholder="请输入"
+                name="password"
+              />
+              <br />
+              <button>提交</button>
+            </form>
+          );
+        }
+      }
+      ReactDOM.render(<Login />, document.getElementById("test"));
+    </script>
+```
+
+## 30.引出生命周期函数
+
+```
+ <script type="text/babel">
+    /* 创建组件    =====生命周期函数     =====》钩子函数 */
+      class Life extends React.Component {
+        state = { opacity: 1 };
+        /* 卸载组件 */
+        destoryComponent = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        //#region
+        action = () => {
+          setInterval(() => {
+            let { opacity } = this.state;
+            if (opacity <= 0) opacity = 1;
+            opacity -= 0.1;
+            this.setState({ opacity });
+          }, 200);
+        };
+        //#endregion
+        /* 组件挂载完毕 */
+        componentDidMount() {
+          this.setIntervalNode = setInterval(() => {
+            let { opacity } = this.state;
+            if (opacity <= 0) opacity = 1;
+            opacity -= 0.1;
+            this.setState({ opacity });
+          }, 200);
+        }
+        /* 组件将要卸载 */
+        componentWillUnmount() {
+          clearInterval(this.setIntervalNode);
+        }
+        /* 初始化渲染、状态更新之后 */
+        render() {
+          console.log("render");
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>颜色开始变化</h2>
+              <button onClick={this.destoryComponent}>Dom销毁</button>
+              <button onClick={this.action}>Dom开始变化</button>
+            </div>
+          );
+        }
+      }
+      /* 渲染组件 */
+      ReactDOM.render(<Life />, document.getElementById("test"));
     </script>
 ```
 
