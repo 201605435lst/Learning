@@ -755,3 +755,212 @@ ref={(c)=>this.input2=c}
     </script>
 ```
 
+## 22.回调ref中调用次数的问题(内联函数调用次数多)
+
+```
+ <script type="text/babel">
+      class MyComponent extends React.Component {
+        state = { isHot: false };
+        changeWeather = () => {
+          const { isHot } = this.state;
+          this.setState({ isHot: !isHot });
+        };
+        showInfo = () => {
+          const { input1 } = this;
+          console.log(input1.value);
+        };
+        saveInput=(c)=>{
+            this.input1=c
+        }
+        render() {
+          const { isHot } = this.state;
+          return (
+            <div>
+              <h2>今天天气很{isHot ? "炎热" : "寒冷"}</h2>
+              {/*<input ref={(c) => (this.input1 = c)} placeholder="请输入" />*/}
+              <input ref={this.saveInput} placeholder="请输入" />
+              <br />
+              <button onClick={this.showInfo}>点击给出提示</button>
+              <button onClick={this.changeWeather}>改天天气状况</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<MyComponent />, document.getElementById("test"));
+    </script>
+```
+
+## 23.createRef的使用
+
+```
+ <script type="text/babel">
+        class Mycomponent extends React.Component{
+            myRef=React.createRef()
+            myRef1=React.createRef()
+            showData=()=>{
+                console.log(this.myRef);
+                alert(this.myRef.current.value)
+            }
+            showData1=()=>{
+                alert(this.myRef1.current.value)
+            }
+            render(){
+                return (
+                    <div>
+                        <input ref={this.myRef} placeholder="请输入"/><br/>
+                        <button onClick={this.showData}>点击显示输入的</button>
+                        <input ref={this.myRef1} onBlur={this.showData1} placeholder="失去焦点显示输入的内容"/>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Mycomponent/>,document.getElementById('test'))
+    </script>
+```
+
+## 24.react中的事件处理
+
+   (1). 通过onXxx属性指定事件处理函数（注意大小写）
+
+​      a.React使用的是自定义（合成）事件，而不是使用的原生的DOM事件------------为了更好的兼容性
+
+​      b.React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）-------为了更高效
+
+（2）通过event.target得到发生事件的DOM元素对象------------不要过度使用ref
+
+```
+<script type="text/babel">
+      class Mycomponent extends React.Component {
+        /* 
+         (1).通过onXxx属性指定事件处理函数（注意大小写）
+            a.React使用的是自定义（合成）事件，而不是使用的原生的DOM事件------------为了更好的兼容性
+            b.React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）-------为了更高效
+        （2）通过event.target得到发生事件的DOM元素对象------------不要过度使用ref
+         
+         */
+        myRef = React.createRef();
+        showData1 = () => {
+          alert(this.myRef.current.value);
+        };
+        showData2 = (e) => {
+          alert(e.target.value);
+        };
+        render() {
+          return (
+            <div>
+              <input ref={this.myRef} placeholder="请输入" type="input" />
+              <br />
+              <button onClick={this.showData1}>点击显示输入框的内容</button>
+              <input onBlur={this.showData2} placeholder="请输入" />
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Mycomponent />, document.getElementById("test"));
+    </script>
+```
+
+## 25.非受控组件
+
+```
+preventDefault() 方法阻止元素发生默认的行为（例如，当点击提交按钮时阻止对表单的提交）
+```
+
+```
+ <script type="text/babel">
+    class Login extends React.Component{
+        handleLogin=(event)=>{
+            event.preventDefault()//阻止表单提交
+            const {input1,input2}=this
+            alert(`这个人的用户名是${input1.value},密码是${input2.value}`)
+        }
+        render(){
+            return (
+                <form action="https://wwww.baidu.com" onSubmit={this.handleLogin}>
+                    <input ref={(c)=>this.input1=c} name="username"/><br/>
+                    <input ref={(c)=>this.input2=c} name="password"/><br/>
+                    <button >登录</button>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Login />,document.getElementById('test'))
+    </script>
+```
+
+## 26.受控组件
+
+```
+<script type="text/babel">
+      class Login extends React.Component {
+        state = { password: "", username: "" };
+        savePassword = (e) => {
+          this.setState({ password: e.target.value });
+        };
+        saveUsername = (e) => {
+          this.setState({ username: e.target.value });
+        };
+        handleLogin = (event) => {
+          event.preventDefault();
+          const { username, password } = this.state;
+          alert(`这个人的用户名是${username},密码是${password}`);
+        };
+        render() {
+          return (
+            <form action="https://wwww.baidu.com" onSubmit={this.handleLogin}>
+              <input onChange={this.saveUsername} name="username" />
+              <br />
+              <input onChange={this.savePassword} name="password" />
+              <br />
+              <button>登录</button>
+            </form>
+          );
+        }
+      }
+      ReactDOM.render(<Login />, document.getElementById("test"));
+    </script>
+```
+
+## 27.对象相关的知识
+
+```
+ <script>
+      let a = "name";
+      let obj = {};
+      obj[a] = 555;
+      console.log(obj); //{name:555}
+    </script>
+```
+
+## 28.高阶函数_函数柯里化
+
+```
+<script type="text/babel">
+      class Login extends React.Component {
+        state = { password: "", username: "" };
+        saveData = (valueType) => {
+          return (e) => {
+            this.setState({ [valueType]: e.target.value });
+          };
+        };
+        handleLogin = (event) => {
+          event.preventDefault();
+          const { username, password } = this.state;
+          alert(`这个人的用户名是${username},密码是${password}`);
+        };
+        render() {
+          return (
+            <form action="https://wwww.baidu.com" onSubmit={this.handleLogin}>
+              <input onChange={this.saveData("username")} name="username" />
+              <br />
+              <input onChange={this.saveData("password")} name="password" />
+              <br />
+              <button>登录</button>
+            </form>
+          );
+        }
+      }
+      ReactDOM.render(<Login />, document.getElementById("test"));
+    </script>
+```
+
