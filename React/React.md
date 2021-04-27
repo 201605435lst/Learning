@@ -1075,3 +1075,328 @@ preventDefault() 方法阻止元素发生默认的行为（例如，当点击提
     </script>
 ```
 
+## 31.生命周期函数（旧）
+
+```
+    生命周期的三个阶段（旧）
+            1. 初始化阶段: 由ReactDOM.render()触发---初次渲染
+                1.constructor()
+                2.componentWillMount()
+                3.render()
+                4.componentDidMount() -------- 一般在这个勾子里做一些初始化的事，列如：开启定时器，发送网络请求、订阅消息；
+            2. 更新阶段: 由组件内部this.setSate()或父组件重新render触发
+                1.shouldComponentUpdate()
+                2.componentWillUpdate()
+                3.render()    -----------必须用到
+                4.componentDidUpdate()
+            3. 卸载组件: 由ReactDOM.unmountComponentAtNode()触发
+                1.componentWillUnmount()   ------做一些收尾的事，关闭定时器、取消订阅消息
+```
+
+```
+<script type="text/babel">
+
+
+      /* 创建组件 */
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---constructor");
+          super(props);
+          /* 初始化状态 */
+          this.state = { sum: 0 };
+        }
+        /*加1按钮的回调 */
+        add = () => {
+          let { sum } = this.state;
+          this.setState({ sum: sum + 1 });
+        };
+        destory = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        /* 组件将要挂载的勾子 */
+        componentWillMount() {
+          console.log("Count---componentWillMount");
+        }
+        /* 组件挂载完毕的勾子 */
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        /*组件被卸载的勾子  */
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+        /* 控制组件更新的阀门 */
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        /* 组件将要更新的勾子 */
+        componentWillUpdate() {
+          console.log("Count---componentWillUpdate");
+        }
+        /* 组件更新完的勾子 */
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          return (
+            <div>
+              <h2>当前求和为：{this.state.sum}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.destory}>点我卸载组件</button>
+              <button onClick={this.force}>不该状态，强制刷新</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Count />, document.getElementById("test"));
+    </script>
+```
+
+## 32.父子组件
+
+```
+  <script type="text/babel">
+      /* 创建组件A */
+      class A extends React.Component {
+        state = { carType: "奔驰" };
+        changeCar = () => {
+          this.setState({ carType: "宝马" });
+        };
+        render() {
+          return (
+            <div>
+              <h2>我是A组件</h2>
+              <button onClick={this.changeCar}>换组件A的名字</button>
+              <B carType={this.state.carType} />
+            </div>
+          );
+        }
+      }
+      class B extends React.Component {
+        /* 组件将要接收新的props的勾子 */
+        componentWillReceiveProps() {
+          console.log("B---------componentWillReceiveProps");
+        }
+        render() {
+          const { carType } = this.props;
+          return (
+            <div>
+              <h2>我是B组件,车的数据是A给我的{carType}</h2>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<A />, document.getElementById("test"));
+    </script>
+```
+
+## 33.生命周期函数(新）
+
+```
+<script type="text/babel">
+      /* 创建组件 */
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---constructor");
+          super(props);
+          /* 初始化状态 */
+          this.state = { sum: 0 };
+        }
+        /*加1按钮的回调 */
+        add = () => {
+          let { sum } = this.state;
+          this.setState({ sum: sum + 1 });
+        };
+        destory = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        /* 组件将要挂载的勾子 */
+        UNSAFE_componentWillMount() {
+          console.log("Count---componentWillMount");
+        }
+        /* 组件挂载完毕的勾子 */
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        /*组件被卸载的勾子  */
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+        /* 控制组件更新的阀门 */
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        /* 组件将要更新的勾子 */
+        UNSAFE_componentWillUpdate() {
+          console.log("Count---componentWillUpdate");
+        }
+        /* 组件更新完的勾子 */
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          return (
+            <div>
+              <h2>当前求和为：{this.state.sum}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.destory}>点我卸载组件</button>
+              <button onClick={this.force}>不该状态，强制刷新</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Count />, document.getElementById("test"));
+    </script>
+```
+
+## 34.getDerivedStateFromProps
+
+```
+getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。
+它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
+
+此方法适用于罕见的用例，即 state 的值在任何时候都取决于 props。
+例如，实现 <Transition> 组件可能很方便，该组件会比较当前组件与下一组件，以决定针对哪些组件进行转场动画。
+
+派生状态会导致代码冗余，并使组件难以维护
+```
+
+```
+<script type="text/babel">
+      /* 创建组件 */
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---constructor");
+          super(props);
+          /* 初始化状态 */
+          this.state = { count: 50 };
+        }
+        /*加1按钮的回调 */
+        add = () => {
+          let { sum } = this.state;
+          this.setState({ sum: sum + 1 });
+        };
+        destory = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        /*即 state 的值在任何时候都取决于 props，则使用*/
+        static getDerivedStateFromProps(props,state){
+            console.log("getDerivedStateFromProps",props,state);
+            return state
+        }
+        /* 组件挂载完毕的勾子 */
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        /*组件被卸载的勾子  */
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+        /* 控制组件更新的阀门 */
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        /* 组件更新完的勾子 */
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          return (
+            <div>
+              <h2>当前求和为：{this.state.count}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.destory}>点我卸载组件</button>
+              <button onClick={this.force}>不该状态，强制刷新</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Count count={100}/>, document.getElementById("test"));
+    </script>
+```
+
+## 35.getSnapshotBeforeUpdate
+
+`getSnapshotBeforeUpdate()` 在最近一次渲染输出（提交到 DOM 节点）之前调用。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期的任何返回值将作为参数传递给 `componentDidUpdate()`。
+
+此用法并不常见，但它可能出现在 UI 处理中，如需要以特殊方式处理滚动位置的聊天线程等。
+
+```
+ <script type="text/babel">
+      /* 创建组件 */
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---constructor");
+          super(props);
+          /* 初始化状态 */
+          this.state = { count: 50 };
+        }
+        /*加1按钮的回调 */
+        add = () => {
+          let { count } = this.state;
+          this.setState({ count: count + 1 });
+        };
+        destory = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        /* 控制state 的值在任何时候都取决于 props */
+        static getDerivedStateFromProps(props,state){
+            console.log("getDerivedStateFromProps",props,state);
+            return null
+        }
+        getSnapshotBeforeUpdate(prevProps, prevState) {
+          console.log("Count---getSnapShotBeforeUpdate",prevProps,prevState);
+          return null
+        }
+        /* 组件挂载完毕的勾子 */
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        /*组件被卸载的勾子  */
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+
+        /* 控制组件更新的阀门 */
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        /* 组件更新完的勾子 */
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          return (
+            <div>
+              <h2>当前求和为：{this.state.count}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.destory}>点我卸载组件</button>
+              <button onClick={this.force}>不该状态，强制刷新</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Count count={100}/>, document.getElementById("test"));
+    </script>
+```
+

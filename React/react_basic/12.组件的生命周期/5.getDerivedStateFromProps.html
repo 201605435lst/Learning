@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.getDerivedStateFromProps</title>
+  </head>
+  <body>
+    <!-- 贮备好一个“容器” -->
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <!-- 引入react核心库 -->
+    <script src="../js/17.0.1/react.development.js"></script>
+    <!-- 引入react-dom，引入支持react操作DOM -->
+    <script src="../js/17.0.1/react-dom.development.js"></script>
+    <!-- 引入Babel，用于将jsx转化为js -->
+    <script src="../js/17.0.1/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="../js/17.0.1/prop-types.js"></script>
+
+    <script type="text/babel">
+      /* 创建组件 */
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("Count---constructor");
+          super(props);
+          /* 初始化状态 */
+          this.state = { count: 50 };
+        }
+        /*加1按钮的回调 */
+        add = () => {
+          let { count } = this.state;
+          this.setState({ count: count + 1 });
+        };
+        destory = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        static getDerivedStateFromProps(props,state){
+            console.log("getDerivedStateFromProps",props,state);
+            return null
+        }
+        /* 组件挂载完毕的勾子 */
+        componentDidMount() {
+          console.log("Count---componentDidMount");
+        }
+        /*组件被卸载的勾子  */
+        componentWillUnmount() {
+          console.log("Count---componentWillUnmount");
+        }
+        /* 控制组件更新的阀门 */
+        shouldComponentUpdate() {
+          console.log("Count---shouldComponentUpdate");
+          return true;
+        }
+        /* 组件更新完的勾子 */
+        componentDidUpdate() {
+          console.log("Count---componentDidUpdate");
+        }
+        render() {
+          console.log("Count---render");
+          return (
+            <div>
+              <h2>当前求和为：{this.state.count}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.destory}>点我卸载组件</button>
+              <button onClick={this.force}>不该状态，强制刷新</button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Count count={100}/>, document.getElementById("test"));
+    </script>
+  </body>
+</html>
