@@ -1400,3 +1400,86 @@ getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初�
     </script>
 ```
 
+## 37.getSnapshotBeforeUpdate示列
+
+**`Element.scrollHeight`** 这个只读属性是一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。
+
+`scrollHeight `的值等于该元素在不使用滚动条的情况下为了适应视口中所用内容所需的最小高度。 没有垂直滚动条的情况下，scrollHeight值与元素视图填充所有内容所需要的最小值[`clientHeight`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/clientHeight)相同。包括元素的padding，但不包括元素的border和margin。scrollHeight也包括 [`::before`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::before) 和 [`::after`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::after)这样的伪元素。
+
+`**Element.scrollTop**` 属性可以获取或设置一个元素的内容垂直滚动的像素数。
+
+一个元素的 `scrollTop` 值是这个元素的**内容顶部**（卷起来的）到它的视口可见内容（的顶部）的距离的度量。当一个元素的内容没有产生垂直方向的滚动条，那么它的 `scrollTop` 值为`0`。
+
+在使用显示比例缩放的系统上，`scrollTop`可能会提供一个小数。
+
+```
+<script type="text/babel">
+      /* 声明组件 */
+      class NewsList extends React.Component {
+        /* 初始化lis状态 */
+        state = { newsArr: [] };
+        /* 在组件挂载之前需要设置列表的数据（使用勾子函数） */
+        componentDidMount() {
+          setInterval(() => {
+            const { newsArr } = this.state;
+            const news = "新闻" + (newsArr.length + 1);
+            this.setState({ newsArr: [news, ...newsArr] });
+          }, 1000);
+        }
+        /* 获取数据挂载之前的元素节点位置 */
+        getSnapshotBeforeUpdate() {
+          const { list } = this;
+          return list.scrollHeight;
+        }
+        componentDidUpdate(preProps, perState, height) {
+          const { list } = this;
+          list.scrollTop += list.scrollHeight - height;
+        }
+        /* 渲染函数 */
+        render() {
+          const { newsArr } = this.state;
+          return (
+            <div className="list" ref={(c) => (this.list = c)}>
+              {newsArr.map((item, index) => {
+                return (
+                  <div key={index} className="news">
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<NewsList />, document.getElementById("test"));
+    </script>
+```
+
+## 38.Dom的Diff算法
+
+```
+经典面试题：
+                1).react/Vue中的key有什么作用？（key的内部原理是什么？）
+                2).为什么遍历列表时，key最好不要用index？
+            1.虚拟DOM中key的作用：
+                1).简单的说：key是虚拟DOM对象的标识，在更新显示时key起着极其重要的作用
+                2).详细的说：当状态中的数据发生变化时，react会根据【新数据】生成【新的虚拟DOM】,
+                            随后react进行【新虚拟DOM】与【旧虚拟DOM】的diff比较，比较规则如下：
+                          a.旧虚拟DOM中找到与新虚拟DOM相同的key:
+                            （1).若虚拟DOM中内容没变，直接使用之前的真实DOM
+                            （2).若虚拟DOM中内容变了，则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+                          b.旧虚拟DOM中未找到与新虚拟DOM相同的key
+                              根据数据创建新的真实DOM，随后渲染到页面
+
+            2.用index作为key可能会引发的问题：
+                    1.若对数据进行：逆序添加、逆序删除等破坏顺序操作：
+                        会产生没有必要的真实DOM更新===》界面效果没问题，单效率低
+
+                    2.如果结构中还包含输入类的DOM：
+                        会产生错误DOM更新===》界面有问题
+
+                    3.注意：如果不存在对数据的逆序添加。逆序删除等破坏顺序操作
+                            仅用于渲染列表用于展示，使用index作为key是没有问题的
+            3.开发中选择具有唯一标识符作为key
+```
+
