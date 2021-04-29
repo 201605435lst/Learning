@@ -62,7 +62,7 @@
     <script src="../js/react-dom.development.js"></script>
     <!-- 引入Babel，用于将jsx转化为js -->
     <script src="../js/babel.min.js"></script>
-<script type="text/babel">//此处一定要写babel
+<script type="text/babel">//此处一定要写babel，作用：将jsx====>js
 /* 1、创建虚拟DOM */
     const  VDOM=<h1>Hello,React</h1>
     /* 渲染虚拟DOM到页面 */
@@ -1481,5 +1481,66 @@ getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初�
                     3.注意：如果不存在对数据的逆序添加。逆序删除等破坏顺序操作
                             仅用于渲染列表用于展示，使用index作为key是没有问题的
             3.开发中选择具有唯一标识符作为key
+```
+
+## 39.index.html文件介绍
+
+```
+<head>
+    <meta charset="utf-8" />
+    <!-- %PUBLIC_URL%    代表 public文件夹的路径-->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- 开启理想视口，用于移动端网页适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 用于配置浏览器页签+地址栏的颜色（仅支持安卓手机浏览器） -->
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <!-- 用于指定网页添加到手机主屏幕后的图标 -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--应用加壳时的配置文件 -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>React App</title>
+  </head>
+  <body>
+    <!-- 若浏览器不支持js，则展示标签中的内容 -->
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--  -->
+    <div id="root"></div>
+  </body>
+```
+
+## 40.index.js文件
+
+```
+/* 分析页面的性能 */
+import reportWebVitals from "./reportWebVitals";
+
+ReactDOM.render(
+  /* 检查代码不合理的地方------------ React.StrictMode*/
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+```
+
+## 41.React.Component简写
+
+```
+const React={a:1,b:2}
+export class Component={
+
+}
+expoet default React
+```
+
+```
+imoort React from 'React'
+																						=====》import React,{Component} from 'React'
+import {Component } from 'React'
 ```
 
