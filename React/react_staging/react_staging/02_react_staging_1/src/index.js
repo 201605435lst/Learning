@@ -10,4 +10,4 @@ import ReactDOM from 'react-dom'
 import App from './app'
 
 /* 渲染组件到页面 */
-ReactDOM.render(<App/>,document.getElementById('app'))
+ReactDOM.render(<App/>,document.getElementById('root'))
