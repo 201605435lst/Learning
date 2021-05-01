@@ -1,0 +1,16 @@
+@color:red;
+@c:center;
+@selector:.box;
+@h:Height;
+
+@{selector} {
+  text-align: @c;
+  background-color: #db7093;
+  .inner {
+          background-color:@color;
+          width: 300px;
+          @{h}: 500px;
+          display: inline-block;
+  }
+}
+

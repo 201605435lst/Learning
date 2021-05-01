@@ -1,0 +1,10 @@
+.box {
+  text-align: center;
+  background-color: #db7093;
+}
+.box .inner {
+  background-color: #ff0000;
+  width: 300px;
+  Height: 500px;
+  display: inline-block;
+}
