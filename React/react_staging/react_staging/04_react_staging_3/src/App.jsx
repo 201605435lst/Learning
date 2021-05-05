@@ -13,12 +13,17 @@ export default class App extends Component {
       { id: '003', name: "羽毛球", status: true },
     ],
   };
+  addTodo=(todo)=>{
+    const {todos}=this.state;
+    const todoObj=[todo,...todos];
+    this.setState({todos:todoObj})
+  }
   render() {
     const { todos } = this.state;
     return (
       <div className="todo-container">
         <div className="todo-wrap">  
-          <Header />
+          <Header addTodo={this.addTodo}/>
           <List todos={todos} />
           <Footer />
         </div>
