@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import{ nanoid} from 'nanoid';
+import PropTypes from 'prop-types'
 import './Header.css';
 export default class Header extends Component {
+  /* 对接收的props的进行类型、必要性的限制 */
+  static propTypes={
+    addTodo:PropTypes.func.isRequired
+  }
+ /*  键盘事件的回调 */
   handleKeyUp=(event)=>{
     const {target,keyCode}=event
     if(keyCode!==13) return

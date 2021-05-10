@@ -537,7 +537,7 @@ const data = ["Angular", "React", "Vue"];
     </script>
 ```
 
-## 16.组件实例三大属性_props简写
+## 16.组件实例三大属性_props简写（传递属性限制）
 
 ```
   static propTypes = {
