@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import "./Footer.css";
 export default class Footer extends Component {
+  handleAllchecked=(e)=>{
+    this.props.updateAllstatus(e.target.checked)
+  }
+  clearAllchecked=()=>{
+    this.props.clearAllchecked()
+  }
   render() {
     const { todos } = this.props;
     /* 获取全部 */
@@ -10,18 +16,20 @@ export default class Footer extends Component {
       (pre, todo) => pre + (todo.status ? 1 : 0),
       0
     );
+
     return (
       <div className="todo-footer">
         <label>
           <input
             type="checkbox"
-            checked={todosCount === doneCount ? true : false}
+            onChange={this.handleAllchecked}
+            checked={todosCount === doneCount && todosCount>0? true : false}
           />
         </label>
         <span>
           <span>已完成{doneCount}</span> / 全部{todosCount}
         </span>
-        <button className="btn btn-danger">清除已完成任务</button>
+        <button onClick={this.clearAllchecked} className="btn btn-danger">清除已完成任务</button>
       </div>
     );
   }

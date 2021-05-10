@@ -35,19 +35,39 @@ export default class App extends Component {
   /*删除todo值 */
   delateTodo = (id) => {
     const { todos } = this.state;
-    const newTodos=todos.filter((todoObj) => {
+    const newTodos = todos.filter((todoObj) => {
       return todoObj.id !== id;
     });
-    this.setState({ todos:newTodos });
+    this.setState({ todos: newTodos });
   };
+  /* 全选 */
+  updateAllstatus = (status) => {
+    const { todos } = this.state;
+    const newTodos = todos.map((todoObj) => {
+      return { ...todoObj, status };
+    });
+    this.setState({todos:newTodos})
+  };
+  /* 删除已选择的 */
+  clearAllchecked=()=>{
+    const { todos } = this.state;
+    const newTodos = todos.filter((todoObj) => {
+      return !todoObj.status;
+    });
+    this.setState({todos:newTodos})
+  }
   render() {
     const { todos } = this.state;
     return (
       <div className="todo-container">
         <div className="todo-wrap">
           <Header addTodo={this.addTodo} />
-          <List todos={todos} updateDone={this.updateDone} delateTodo={this.delateTodo} />
-          <Footer  todos={todos} />
+          <List
+            todos={todos}
+            updateDone={this.updateDone}
+            delateTodo={this.delateTodo}
+          />
+          <Footer clearAllchecked={this.clearAllchecked} updateAllstatus={this.updateAllstatus} todos={todos} />
         </div>
       </div>
     );
