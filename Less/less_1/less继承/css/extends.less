@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+@import "./mixin/minin_center.less";
+.box {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-color: pink;
+  margin: 0 auto;
+  .inner {
+    &:extend(.center all);
+    &:nth-child(1) {
+        background-color: rgb(47, 0, 255);
+        width: 200px;
+        height: 200px;
+    }
+    &:nth-child(2) {
+        background-color: rgb(255, 0, 106);
+        width: 100px;
+        height: 100px;
+    }
+  }
+}

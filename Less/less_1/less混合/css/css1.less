@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.position(@c,@w,@h:100px) {
+  position: absolute;
+  background-color: @c;
+  width: @w;
+  height: @h;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.box {
+  left: 0;
+  right: 0;
+  .position(rgb(212, 0, 255),400px,400px);
+  .inner1 {
+    right: 0;
+    .position(rgb(255, 123, 0),100px,100px);
+  }
+  .inner2 {
+    left: 0;
+    .position(rgb(255, 192, 203),100px);
+  }
+}

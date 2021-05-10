@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.center,
+.box .inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.center:hover,
+.box .inner:hover {
+  background-color: #161515 !important;
+}
+.box {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-color: pink;
+  margin: 0 auto;
+}
+.box .inner:nth-child(1) {
+  background-color: #2f00ff;
+  width: 200px;
+  height: 200px;
+}
+.box .inner:nth-child(2) {
+  background-color: #ff006a;
+  width: 100px;
+  height: 100px;
+}
