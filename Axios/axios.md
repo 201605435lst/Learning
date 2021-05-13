@@ -437,3 +437,209 @@ ontimeout:绑定超时的监听
    
 ```
 
+## 17.axios的特点
+
+```
+基本promise的异步ajax请求库
+
+浏览器端和node端都可以使用
+
+支持请求/相应拦截器
+
+支持请求取消
+
+请求/相应数据转换
+
+批量发送多个请求
+```
+
+## 18.axios的基本使用
+
+```
+ <body>
+    <button onclick="testGet()">get请求</button>
+    <button onclick="testPost()">post请求</button>
+    <button onclick="testPut()">put请求</button>
+    <button onclick="testDelete()">delete请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      axios.defaults.baseURL = "http://localhost:3000";
+      function testGet() {
+        axios({
+          url: "/posts",
+          method: "get",
+          params: {
+            id: 7,
+          },
+        }).then((response) => {
+          console.log(response.data);
+        });
+      }
+
+      function testPost() {
+        axios({
+          url: "/posts",
+          method: "post",
+          data: {
+            "title": "json-server18888",
+            "author": "typicode1888",
+          },
+        }).then((response) => {
+          console.log(response.data);
+        });
+      }
+      function testDelete() {
+        axios({
+          url: "/posts/7",
+          method: "delete",
+         
+        }).then((response) => {
+          console.log(response.data);
+        });
+      }
+      function testPut() {
+        axios({
+          url: "/posts/7",
+          method: "put",
+          data: {
+            "title": "json-server555",
+            "author": "typicode155555555558",
+          },
+        }).then((response) => {
+          console.log(response.data);
+        });
+      }
+    </script>
+  </body>
+```
+
+## 19.axios的ajax请求的二次封装（axios.create）
+
+```
+ <body>
+    <button onclick="testGet()">get请求</button>
+    <button onclick="testPost()">post请求</button>
+    <button onclick="testPut()">put请求</button>
+    <button onclick="testDelete()">delete请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    
+    <script>
+    
+      /* 端口号为3000的请求 */
+      axios.defaults.baseURL = "http://localhost:3000";
+      axios.get("/posts");
+      
+      
+      /* 端口号为4000de 请求 */
+      const instance = axios.create({
+        baseURL: "http://localhost:4000",
+      });
+      instance.get("/posts");
+      
+       
+    </script>
+</body>
+```
+
+## 20.拦截器
+
+```
+<body>
+    <script>
+        // Promise
+        // 设置请求拦截器  config 配置对象
+        axios.interceptors.request.use(function (config) {
+            console.log('请求拦截器 成功 - 1号');
+            //修改 config 中的参数
+            config.params = {a:100};
+
+            return config;
+        }, function (error) {
+            console.log('请求拦截器 失败 - 1号');
+            return Promise.reject(error);
+        });
+
+        axios.interceptors.request.use(function (config) {
+            console.log('请求拦截器 成功 - 2号');
+            //修改 config 中的参数
+            config.timeout = 2000;
+            return config;
+        }, function (error) {
+            console.log('请求拦截器 失败 - 2号');
+            return Promise.reject(error);
+        });
+
+        // 设置响应拦截器
+        axios.interceptors.response.use(function (response) {
+            console.log('响应拦截器 成功 1号');
+            return response.data;
+            // return response;
+        }, function (error) {
+            console.log('响应拦截器 失败 1号')
+            return Promise.reject(error);
+        });
+
+        axios.interceptors.response.use(function (response) {
+            console.log('响应拦截器 成功 2号')
+            return response;
+        }, function (error) {
+            console.log('响应拦截器 失败 2号')
+            return Promise.reject(error);
+        });
+
+        //发送请求
+        axios({
+            method: 'GET',
+            url: 'http://localhost:3000/posts'
+        }).then(response => {
+            console.log('自定义回调处理成功的结果');
+            console.log(response);
+        });
+    </script>   
+</body>
+```
+
+## 21.取消请求
+
+```
+<body>
+    <div class="container">
+        <h2 class="page-header">axios取消请求</h2>
+        <button class="btn btn-primary"> 发送请求 </button>
+        <button class="btn btn-warning" > 取消请求 </button>
+    </div>
+    <script>
+        //获取按钮
+        const btns = document.querySelectorAll('button');
+        //2.声明全局变量
+        let cancel = null;
+        //发送请求
+        btns[0].onclick = function(){
+            //检测上一次的请求是否已经完成
+            if(cancel !== null){
+                //取消上一次的请求
+                cancel();
+            }
+            axios({
+                method: 'GET',
+                url: 'http://localhost:3000/posts',
+                //1. 添加配置对象的属性
+                cancelToken: new axios.CancelToken(function(c){
+                    //3. 将 c 的值赋值给 cancel
+                    cancel = c;
+                })
+            }).then(response => {
+                console.log(response);
+                //将 cancel 的值初始化
+                cancel = null;
+            })
+        }
+
+        //绑定第二个事件取消请求
+        btns[1].onclick = function(){
+            cancel();
+        }
+    </script>   
+</body>
+```
+
