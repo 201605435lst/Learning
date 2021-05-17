@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="testGet()">get请求</button>
+    <button onclick="testPost()">post请求</button>
+    <button onclick="testPut()">put请求</button>
+    <button onclick="testDelete()">delete请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      /* 端口号为3000的请求 */
+      axios.defaults.baseURL = "http://localhost:3000";
+      axios.get("/posts");
+      /* 端口号为4000de 请求 */
+      const instance = axios.create({
+        baseURL: "http://localhost:4000",
+      });
+      instance.get("/posts");
+    </script>
+  </body>
+</html>

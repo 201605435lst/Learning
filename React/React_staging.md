@@ -148,7 +148,7 @@ export default class Item extends Component {
 
 ## 4.对接收的props的进行类型、必要性的限制
 
-**安装prop-types**
+> **安装prop-types**
 
 ```
 import PropTypes from "prop-types";
@@ -161,4 +161,178 @@ import PropTypes from "prop-types";
 ```
 
 
+
+## 5.react脚手架配置代理总结
+
+
+
+### 方法一
+
+> 在package.json中追加如下配置
+
+```json
+"proxy":"http://localhost:5000"
+```
+
+> 说明：
+
+1. 优点：配置简单，前端请求资源时可以不加任何前缀。
+2. 缺点：不能配置多个代理。
+3. 工作方式：上述方式配置代理，当请求了3000不存在的资源时，那么该请求会转发给5000 （优先匹配前端资源）
+
+### 方法二
+
+1. 第一步：创建代理配置文件
+
+   ```
+   在src下创建配置文件：src/setupProxy.js
+   ```
+
+2. 编写setupProxy.js配置具体代理规则：
+
+   ```js
+   const proxy = require('http-proxy-middleware')
+   
+   module.exports = function(app) {
+     app.use(
+       proxy('/api1', {  //api1是需要转发的请求(所有带有/api1前缀的请求都会转发给5000)
+         target: 'http://localhost:5000', //配置转发目标地址(能返回数据的服务器地址)
+         changeOrigin: true, //控制服务器接收到的请求头中host字段的值
+         /*
+         	changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+         	changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:3000
+         	changeOrigin默认值为false，但我们一般将changeOrigin值设为true
+         */
+         pathRewrite: {'^/api1': ''} //去除请求前缀，保证交给后台服务器的是正常请求地址(必须配置)
+       }),
+       proxy('/api2', { 
+         target: 'http://localhost:5001',
+         changeOrigin: true,
+         pathRewrite: {'^/api2': ''}
+       })
+     )
+   }
+   ```
+
+> 说明：
+
+1. 优点：可以配置多个代理，可以灵活的控制请求是否走代理。
+2. 缺点：配置繁琐，前端请求资源时必须加前缀。
+
+## 6.GitHub搜索案列
+
+> **Index**
+
+```
+export default class index extends Component {
+  /* 初始化状态 */
+    state={
+        users:[],
+        isFirst:true,//是否为第一次打开页面
+        isLoading:false,//是否处于加载中
+        err:null,//请求请求错误相关的信息
+    }
+    updateAppState=(stateObj)=>{
+        this.setState(stateObj)
+    }
+  
+  render() {
+    return (
+      <div className="container">
+        <Search updateAppState={this.updateAppState}/>
+        <List {...this.state}/>
+      </div>
+    );
+  }
+}
+```
+
+> **search**
+
+```
+ export default class search extends Component {
+    search=()=>{
+        /* 发送请求通知页面更新状态 */
+        this.props.updateAppState({
+            isFirst:false,//是否为第一次打开页面
+            isLoading:true,//是否处于加载中
+        })  
+        const {keyWordElement:{value:keyWord}}=this
+        axios({
+            url:'/api1/search/users',
+            method:'get',
+            params:{
+                q:`${keyWord}`,
+            }
+        }).then(
+            res=>{
+                // const {updateAppState}=this.props
+                    this.props.updateAppState({
+                        isLoading:false,//是否处于加载中
+                        users:res.data.items
+                    })  
+            },
+            err=>{
+                this.props.updateAppState({
+                  isLoading:false,
+                  err:err.message
+                })  
+            }
+        )
+    }
+  render() {
+    return (
+        <section className="jumbotron">
+        <h3 className="jumbotron-heading">搜索git用户</h3>
+        <div>
+          <input ref={(c)=>this.keyWordElement=c} type="text" placeholder="请输入关键字点击搜索" />
+          &nbsp;<button onClick={this.search}>搜索</button>
+        </div>
+      </section>
+    )
+
+   
+  }
+}
+```
+
+> ****
+
+> **List**
+
+```
+export default class List extends Component {
+   
+  render() {
+    const { users,isFirst,isLoading,err} =this.props
+    return (
+      <div className="row">
+        {
+         isFirst?<h2>欢迎使用，请输入关键字，随后点击搜索</h2>:
+         isLoading?<h2>Loading.....</h2>:
+         err?<h2>{err}</h2>:
+        users.map((userObj) => {
+          return (
+            <div className="card" key={userObj.id}>
+            <a
+              rel="noreferrer"
+              href={userObj.html_url}
+              target="_blank"
+            >
+              <img
+                alt="head_portrait"
+                src={userObj.avatar_url}
+                style={{ width: "100px" }}
+              />
+            </a>
+            <p className="card-text">{userObj.login}</p>
+          </div>
+          )
+        })}
+      </div>
+    );
+  }
+}
+
+```
 

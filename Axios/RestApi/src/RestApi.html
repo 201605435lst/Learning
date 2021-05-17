@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="testGet()">get请求</button>
+    <button onclick="testPost()">post请求</button>
+    <button onclick="testPut()">put请求</button>
+    <button onclick="testDelete()">delete请求</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      function testGet() {
+        axios.get("http://localhost:3000/posts?id=2").then((response) => {
+          console.log(response.data);
+        });
+      }
+      function testPost() {
+        axios
+          .post("http://localhost:3000/posts", {
+            title: "json-server11",
+            author: "typicode11",
+          })
+          .then((response) => {
+            console.log(response.data);
+          });
+      }
+      function testDelete() {
+        axios
+          .delete("http://localhost:3000/posts/1"
+          )
+          .then((response) => {
+            console.log(response.data);
+          });
+      }
+      function testPut() {
+        axios.put("http://localhost:3000/posts?id=1", {
+            title: "json-server22",
+            author: "typicode555",
+          }).then((response) => {
+          console.log(response.data);
+        });
+      }
+    </script>
+  </body>
+</html>
