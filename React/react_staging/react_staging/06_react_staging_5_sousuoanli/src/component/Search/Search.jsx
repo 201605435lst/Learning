@@ -9,7 +9,7 @@ export default class search extends Component {
         })  
         const {keyWordElement:{value:keyWord}}=this
         axios({
-            url:'/api1/search/users',
+            url:`/api1/search/users`,
             method:'get',
             params:{
                 q:`${keyWord}`,

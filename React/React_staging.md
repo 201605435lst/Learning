@@ -1,4 +1,4 @@
-## 1.创建项目
+##  1.创建项目
 
 ```
 react提供了一个用于创建react项目的脚手架库: create-react-app
@@ -334,5 +334,255 @@ export default class List extends Component {
   }
 }
 
+```
+
+## 7.GitHub搜索案例—(pubsub-js)
+
+> **index**
+
+```
+export default class index extends Component {
+  render() {
+    return (
+      <div className="container">
+      
+        <Search/>
+        
+        <List />
+        
+      </div>
+    );
+  }
+}
+
+```
+
+> **Search**
+>
+>  ```
+>  const {keyWordElement:{value:keyWord}}=this
+>  ```
+
+```
+export default class search extends Component {
+    search=()=>{
+    
+        /* 当输入的值发生变化的时候，需要进行消息订阅*/
+        PubSub.publish('ListComponentState',{
+          isFirst:false,//是否为第一次打开页面
+          isLoading:true,//是否处于加载中
+        })
+        
+        const {keyWordElement:{value:keyWord}}=this
+        
+        axios({
+            url:'/api2/search/users',
+            method:'get',
+            params:{
+                q:`${keyWord}`,
+            }
+        }).then(
+            res=>{
+            
+              PubSub.publish('ListComponentState',{
+                users:res.data.items,
+                isLoading:false,//是否处于加载中
+              })
+              
+            },
+            err=>{
+              PubSub.publish('ListComponentState',{
+                isLoading:false,//是否处于加载中
+                err:err.message,//请求请求错误相关的信息
+              })
+            }
+        )
+    }
+  render() {
+    return (
+        <section className="jumbotron">
+        <h3 className="jumbotron-heading">搜索git用户</h3>
+        <div>
+          <input ref={(c)=>this.keyWordElement=c} type="text" placeholder="请输入关键字点击搜索" />
+          &nbsp;<button onClick={this.search}>搜索</button>
+        </div>
+      </section>
+    )
+
+   
+  }
+}
+
+```
+
+> **List**
+
+```
+export default class List extends Component {
+
+  state = {
+    users: [],
+    isFirst: true, //是否为第一次打开页面
+    isLoading: false, //是否处于加载中
+    err: null, //请求请求错误相关的信息
+  };
+  
+  /* 组件挂载完毕的勾子 */
+  componentDidMount() {
+    console.log("disahfi");
+    this.token = PubSub.subscribe("ListComponentState", (_,data) => {
+      this.setState(data);
+    });
+  }
+  
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.token);
+  }
+  
+  render() {
+    const { users, isFirst, isLoading, err } = this.state;
+    return (
+      <div className="row">
+        {isFirst ? (
+          <h2>欢迎使用，请输入关键字，随后点击搜索</h2>
+        ) : isLoading ? (
+          <h2>Loading.....</h2>
+        ) : err ? (
+          <h2>{err}</h2>
+        ) : (
+          users.map((userObj) => {
+            return (
+              <div className="card" key={userObj.id}>
+                <a rel="noreferrer" href={userObj.html_url} target="_blank">
+                  <img
+                    alt="head_portrait"
+                    src={userObj.avatar_url}
+                    style={{ width: "100px" }}
+                  />
+                </a>
+                <p className="card-text">{userObj.login}</p>
+              </div>
+            );
+          })
+        )}
+      </div>
+    );
+  }
+}
+
+```
+
+## 8.GitHub搜索案例-fetch
+
+```
+fetch:原生函数，不再使用XmlHttpRequest提交ajax请求
+老版本浏览器可能不支持
+```
+
+> axios
+
+```
+ axios({
+            url:'/api2/search/users',
+            method:'get',
+            params:{
+                q:`${keyWord}`,
+            }
+        }).then(
+            res=>{
+              PubSub.publish('ListComponentState',{
+                users:res.data.items,
+                isLoading:false,//是否处于加载中
+              })
+            },
+            err=>{
+              PubSub.publish('ListComponentState',{
+                isLoading:false,//是否处于加载中
+                err:err.message,//请求请求错误相关的信息
+              })
+            }
+        )
+```
+
+> fetch(未优化)
+
+```
+fetch(`/api2/search/users?q=${keyWord}`)
+      .then(
+        (response) => {
+          console.log("联系服务器成功了");
+          return response.json();
+        },
+        (error) => {
+          console.log("联系服务器失败了", error);
+          return new Promise(() => {});
+        }
+      )
+      .then(
+        (res) => console.log(res),
+        (err) => console.log(err)
+      );
+```
+
+> fetch(优化1)
+
+```
+ fetch(`/api2/search/users?q=${keyWord}`)
+      .then((response) => {
+        console.log("联系服务器成功了");
+        return response.json();
+      })
+      .then((res) => console.log(res))
+      .catch((error) => console.log("失败了", error));
+```
+
+> fetch(优化2)
+
+```
+ try{
+    const response = await fetch(`/api2/search/users?q=${keyWord}`);
+    const data = await response.json();
+          }catch(err){
+           console.log("失败了", error)
+          }
+```
+
+## 9.github搜索案例相关知识点（总结）
+
+```
+	1.设计状态时要考虑全面，例如带有网络请求的组件，要考虑请求失败怎么办。
+	
+	2.ES6小知识点：解构赋值+重命名
+	
+				let obj = {a:{b:1}}
+				
+				const {a} = obj; //传统解构赋值
+				
+				const {a:{b}} = obj; //连续解构赋值
+				
+				const {a:{b:value}} = obj; //连续解构赋值+重命名
+				
+	3.消息订阅与发布机制
+	
+				1.先订阅，再发布（理解：有一种隔空对话的感觉）
+				
+				2.适用于任意组件间通信
+				
+				3.要在组件的componentWillUnmount中取消订阅
+				
+	4.fetch发送请求（关注分离的设计思想）
+	
+				try {
+				
+					const response= await fetch(`/api1/search/users2?q=${keyWord}`)
+					
+					const data = await response.json()
+					
+					console.log(data);
+					
+				} catch (error) {
+				
+					console.log('请求出错',error);
+				}
 ```
 
