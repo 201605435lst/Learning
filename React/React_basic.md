@@ -1197,6 +1197,64 @@ preventDefault() 方法阻止元素发生默认的行为（例如，当点击提
 
 ## 33.生命周期函数(新）
 
+
+
+>  **生命周期的三个阶段（新）**
+
+1. 初始化阶段—由ReactDOM.render()触发---初次渲染
+
+```
+1. constructor()
+
+2.getDerivedStateFromProps
+
+3. render()
+
+4. componentDidMount()
+```
+
+2. 更新阶段—由组件内部this.setSate()或父组件重新render触发
+
+```
+1.getDerivedStateFromProps
+
+2.shouldComponentUpdate()
+
+3.render()
+
+4.getSnapshotBeforeUpdate
+
+5.componentDidUpdate()
+```
+
+3. 卸载组件— 由ReactDOM.unmountComponentAtNode()触发
+
+```
+componentWillUnmount()
+```
+
+> **重要的勾子**
+
+```
+1. render：初始化渲染或更新渲染调用
+
+2. componentDidMount：开启监听, 发送ajax请求
+
+3. componentWillUnmount：做一些收尾工作, 如: 清理定时器
+```
+
+> **即将废弃的勾子**
+
+```
+1. componentWillMount
+
+2. componentWillReceiveProps
+
+3. componentWillUpdate
+
+现在使用会出现警告，下一个大版本需要加上UNSAFE_前缀才能使用，以后可能会被彻底废弃，不建议使用。
+```
+
 ```
 <script type="text/babel">
       /* 创建组件 */
