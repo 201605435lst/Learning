@@ -605,3 +605,142 @@ fetch(`/api2/search/users?q=${keyWord}`)
 
 ```
 
+#### 10.1.2 路由的理解
+
+> 1. 什么是路由？
+
+```
+一个路由就是一个映射关系{key:value}
+
+key为路径，value可能是function或component
+```
+
+> 2. 路由分类
+
+```
+后端路由
+
+			1）理解：value是function用来处理客户端提交的请求
+			
+			2）注册路由：router.get(path,function(req,res))
+			
+			3)祖册过程：当node接收到一个请求时，根据请求路径找到匹配的路由，调用路由中的函数来处理请求，返回响应数据
+			
+前端路由：
+
+			1）浏览器端路由，value是component，用于展示页面内容
+			
+			2）注册路由：<Route path="/test" component={Test}>
+			
+			3)工作过程：当浏览器的path变为/test时，当前路由组件就会变为Test组件
+```
+
+#### 10.1.4 react-router-dom的理解
+
+```
+React的一个插件库
+
+专门用来实现一个SPA应用
+
+基于react的项目基本都会用到此库
+```
+
+### 10.2路由的基本使用
+
+```
+1.明确好界面中的导航区、展示区
+
+2.导航区的a标签改为Link标签
+
+      <Link to="/xxxxx">Demo</Link>
+
+3.展示区写Route标签进行路径的匹配
+
+      <Route path='/xxxx' component={Demo}/>
+
+4.<App>的最外侧包裹了一个<BrowserRouter>或<HashRouter>
+```
+
+> 安装
+
+```
+yarn add react-router-dom
+```
+
+> 原生html中，靠a标签跳转不同的页面
+
+```
+ <a className="list-group-item active" href="./about.html">
+    About
+</a>
+<a className="list-group-item" href="./home.html">
+    Home
+</a>        
+```
+
+> 在react中靠路由链接实现切换组件---编写路由链接
+
+```
+<Link className="list-group-item active" to="/home">
+  Home
+</Link>
+<Link className="list-group-item " to="/about">
+  About
+</Link>
+```
+
+>  注册路由 
+
+```
+<Route path="/home" component={Home} />
+<Route path="/about" component={About} />
+```
+
+```
+import {BrowserRouter} from 'react-router-dom' 
+ ReactDOM.render(
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>,
+    document.getElementById('root'))
+```
+
+### 10.3路由组件与一般组件 
+
+```
+		1.写法不同：
+		
+					一般组件：<Demo/>
+					
+					路由组件：<Route path="/demo" component={Demo}/>
+					
+		2.存放位置不同：
+		
+					一般组件：components
+					
+					路由组件：pages
+					
+		3.接收到的props不同：
+		
+					一般组件：写组件标签时传递了什么，就能收到什么
+					
+					路由组件：接收到三个固定的属性
+					
+										history:
+													go: ƒ go(n)
+													goBack: ƒ goBack()
+													goForward: ƒ goForward()
+													push: ƒ push(path, state)
+													replace: ƒ replace(path, state)
+													
+										location:
+													pathname: "/about"
+													search: ""
+													state: undefined
+													
+										match:
+													params: {}
+													path: "/about"
+													url: "/about"
+```
+
