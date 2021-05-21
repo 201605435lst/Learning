@@ -847,18 +847,64 @@ export default class Home extends Component {
 ```
 			1.params参数
 						路由链接(携带参数)：<Link to='/demo/test/tom/18'}>详情</Link>
+						
 						注册路由(声明接收)：<Route path="/demo/test/:name/:age" component={Test}/>
+						
 						接收参数：this.props.match.params
+						
 			2.search参数
 						路由链接(携带参数)：<Link to='/demo/test?name=tom&age=18'}>详情</Link>
+						
 						注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
+						
 						接收参数：this.props.location.search
+						
 						备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
 			3.state参数
 						路由链接(携带参数)：<Link to={{pathname:'/demo/test',state:{name:'tom',age:18}}}>详情</Link>
+						
 						注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
+						
 						接收参数：this.props.location.state
+						
 						备注：刷新也可以保留住参数
+						
+```
+
+> **向路由组件传递params参数**
+
+```
+<Link to={`/home/message/detail/${item.id}/${item.title}`}> 链接1</Link>
+
+/* 接受params传递的参数 */
+
+const {id,title}=this.props.match.params 
+```
+
+>  **向路由组件传递search参数**
+
+```
+<Link to={`/home/message/detail/?id=${item.id}&title=${item.title}`} > 链接1</Link>
+
+/* 接受search传递的参数 */
+
+const {search}=this.props.location
+
+const {id,title}=qs.parse(search.slice(1))
+```
+
+> **向路由组件传递state参数**
+
+```
+  <Link to={{
+            pathname: "/home/message/detail",
+            state: { id: item.id, title: item.title },
+            }}
+ >链接1 </Link>
+ 
+     /* 接收state参数 */
+    const { id, title } = this.props.location.state;
+
 ```
 
 #### 10.11.1 向路由组件传递params参数
@@ -942,17 +988,10 @@ urlencoded     ------key=value&key=value
 export default class Detail extends Component {
   
     render() {
-        console.log(this.props);
-
-        /* 接受params传递的参数 */
-       /*  const {id,title}=this.props.match.params */
-       /* 接受search传递的参数 */
+    
         const {search}=this.props.location
-        console.log(search);
-       
         const {id,title}=qs.parse(search.slice(1))
-        console.log(id);
-        console.log(title);
+
         const objResult=dataResults.find(item=>{
             return item.id===id
         })
@@ -966,4 +1005,170 @@ export default class Detail extends Component {
     }
 }
 ```
+
+```
+export default class Message extends Component {
+  state = {
+    message: [
+      { id: "001", title: "消息1" },
+      { id: "002", title: "消息2" },
+      { id: "003", title: "消息3" },
+    ],
+  };
+  render() {
+    const { message } = this.state;
+
+    return (
+      <div>
+        <ul>
+          {message.map((item) => {
+            return (
+              <li key={item.id}>
+                {/* 向路由组件传递search参数 */}
+                <Link to={`/home/message/detail/?id=${item.id}&title=${item.title}`} >
+                  {item.title}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        {/* 接受search参数无需声明,正常注册即可 */}
+        <Route path="/home/message/detail" component={Detail} />
+      </div>
+    );
+  }
+}
+```
+
+#### 10.11.3 向路由组件传递state参数
+
+```
+export default class Detail extends Component {
+  render() {
+    console.log(this.props);
+
+    /* 接受params传递的参数 */
+    /*  const {id,title}=this.props.match.params */
+
+    /* 接受search传递的参数 */
+    // const {search}=this.props.location
+    // const {id,title}=qs.parse(search.slice(1))
+
+    /* 接收state参数 */
+    const { id, title } = this.props.location.state;
+    console.log(this.props);
+    const objResult = dataResults.find((item) => {
+      return item.id === id;
+    });
+    return (
+      <div>
+        <h2>ID:{id}</h2>
+        <h2>TITLE:{title}</h2>
+        <h2>CONTENT:{objResult.content}</h2>
+      </div>
+    );
+  }
+}
+```
+
+```
+export default class Message extends Component {
+  state = {
+    message: [
+      { id: "001", title: "消息1" },
+      { id: "002", title: "消息2" },
+      { id: "003", title: "消息3" },
+    ],
+  };
+  render() {
+    const { message } = this.state;
+
+    return (
+      <div>
+        <ul>
+          {message.map((item) => {
+            return (
+              <li key={item.id}>
+                {/* 向路由组件传递params参数 */}
+                {/* <Link to={`/home/message/detail/${item.id}/${item.title}`}>{item.title}</Link> */}
+
+                {/* 向路由组件传递search参数 */}
+                {/* <Link to={`/home/message/detail/?id=${item.id}&title=${item.title}`} >
+                  {item.title}
+                </Link> */}
+
+                {/* 向路由组件传递state参数 */}
+                <Link
+                  to={{
+                    pathname: "/home/message/detail",
+                    state: { id: item.id, title: item.title },
+                  }}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        {/* 声明接受params参数 */}
+        {/*   <Route path="/home/message/detail/:id/:title" component={Detail} /> */}
+
+        {/* 接受search参数无需声明,正常注册即可 */}
+        {/*   <Route path="/home/message/detail" component={Detail} /> */}
+
+        {/* 接收state参数无需声明，正常注册即可 */}
+        <Route path="/home/message/detail" component={Detail} />
+      </div>
+    );
+  }
+}
+
+```
+
+### 10.12  push与replace模式
+
+```
+push是压栈，留下痕迹，有历史记录
+
+replace是替换，不留下痕迹，没有历史记录
+```
+
+### 10.13 编程式路由导航
+
+```
+  pushShow = (id, title) => {
+  
+    /* push挑转，携带params参数 */
+    this.props.history.push(`/home/message/detail/${id}/${title}`);
+
+    /*  push跳转，携带search参数 */
+    this.props.history.push(`/home/message/detail/?id=${id}& title=${title}`);
+
+    // /*  push跳转，携带state参数 */
+    this.props.history.push("/home/message/detail", { id, title });
+    
+  };
+  replaceShow = (id, title) => {
+  
+    /* replace挑转，携带params参数 */
+    this.props.history.replace(`/home/message/detail/${id}/${title}`);
+
+    // /* replace挑转，携带search参数 */
+    this.props.history.replace(
+      `/home/message/detail/?id=${id}& title=${title}`
+    );
+
+    // /* replace挑转，携带state参数 */
+    this.props.history.replace("/home/message/detail", { id, title });
+  };
+  
+      forward = () => {
+        this.props.history.goForward();
+      };
+      back = () => {
+        this.props.history.goBack();
+      };
+```
+
+
 
