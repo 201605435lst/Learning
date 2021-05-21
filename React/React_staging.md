@@ -705,7 +705,7 @@ import {BrowserRouter} from 'react-router-dom'
     document.getElementById('root'))
 ```
 
-### 10.3路由组件与一般组件 
+### 10.3 路由组件与一般组件
 
 ```
 		1.写法不同：
@@ -742,5 +742,39 @@ import {BrowserRouter} from 'react-router-dom'
 													params: {}
 													path: "/about"
 													url: "/about"
+```
+
+### 10.4 NavLink的使用
+
+> **activeClassName—给NavLink加类名**
+
+```
+  	 <NavLink activeClassName="atColor" className="list-group-item " to="/home">
+        Home
+      </NavLink>
+      <NavLink activeClassName="atColor" className="list-group-item " to="/about">
+        About
+      </NavLink>
+```
+
+### 10.5 NavLink与封装NavLink
+
+```
+NavLink可以实现路由链接的高亮，通过activeClassName指定样式
+
+标签题内容是一个特殊的标签属性
+
+通过this.props.children可以获取标签体内容
+```
+
+### 10.6 Switch的使用
+
+```
+        <Switch>
+          {/* 注册路由 */}
+          <Route path="/home" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/about" component={Test} />
+        </Switch>
 ```
 

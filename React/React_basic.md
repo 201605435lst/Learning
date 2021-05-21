@@ -473,7 +473,7 @@ const data = ["Angular", "React", "Vue"];
 
 ## 14.展开运算符（reduce的使用）
 
-​		1. 展开运算符不能展开对象
+> 展开运算符不能展开对象
 
 ```
         /* 计算和 */
@@ -487,10 +487,19 @@ const data = ["Angular", "React", "Vue"];
         let Person={name:'小张',age:'20'}
         let Person2={...Person}
         console.log(Person);//相当于给Person2复制了一个Person
+        
         console.log(...Person);//报错，展开语法不能展开对象
 ```
 
-## 15.组件实例三大属性_props
+```
+ ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
+ 
+ 此处的{...p}不是展开运算符，{}表示此处要使用js表达式了
+```
+
+
+
+##  15.组件实例三大属性_props
 
 ```
 <script type="text/babel">
@@ -529,6 +538,7 @@ const data = ["Angular", "React", "Vue"];
         <Person name="小明" age={15} sex="男" />,
         document.getElementById("test1")
       );
+      /**/
       ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
 
       function speak(){
@@ -576,7 +586,9 @@ const data = ["Angular", "React", "Vue"];
         render() {
           console.log(this);
           const { name, age, sex } = this.props;
+          
           //this.props.age=age+1;//此代码会报错，因为props是只读的
+          
           return (
             <ul>
               <li>{name}</li>
