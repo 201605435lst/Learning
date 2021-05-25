@@ -8,11 +8,9 @@ const incrementFnc = (data) => ({ type: INCREMENT, data });
 const decrementFnc = (data) => ({ type: DECREMENT, data });
 
 /* 异步action，就是指action的值为函数,异步action中一般都会调用同步action */
-const incrementAsyncFnc = (data, time) => {
-    
+const incrementAsyncFnc = (data, time) => {  
   return (dispatch) => {
     setTimeout(() => {
-      console.log(time);
       dispatch(incrementFnc(data));
     }, time);
   };

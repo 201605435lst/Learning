@@ -169,25 +169,27 @@ store.subscribe(()=>{
 
 ```
 
+import { INCREMENT, DECREMENT } from "./constant";
+
+/*为count组件生成action对象  */
+
 /* 同步action，就是指action的值为object类型的一般对象 */
 
 const incrementFnc = (data) => ({ type: INCREMENT, data });
-
 const decrementFnc = (data) => ({ type: DECREMENT, data });
 
 /* 异步action，就是指action的值为函数,异步action中一般都会调用同步action */
-
 const incrementAsyncFnc = (data, time) => {
     
-  return () => {
-  
-    setTimeout((dispatch) => {
-
+  return (dispatch) => {
+    setTimeout(() => {
+      console.log(time);
       dispatch(incrementFnc(data));
-      
     }, time);
   };
 };
+export { incrementFnc, decrementFnc, incrementAsyncFnc };
+
 ```
 
 > **store.js**
@@ -211,5 +213,84 @@ import countReducer from './count_reducer'
 import thunk from 'redux-thunk'
 
 export default createStore(countReducer,applyMiddleware(thunk))
+```
+
+#### 1.5 React-redux的基本使用
+
+> **components/count**
+
+```
+  increment = () => {
+    const { value } = this.selectoption;
+    this.props.increment(value*1)
+  };
+  decrement = () => {
+    const { value } = this.selectoption;
+    this.props.decrement(value*1)
+  };
+  incrementOfAdd =  () => {
+    const { value } = this.selectoption;
+    const {count}=this.props
+    if(count % 2!==0){
+      this.props.increment(value*1)
+    }
+    
+  };
+  incrementOfAsync = () => {
+    const { value } = this.selectoption;
+    this.props.incrementAsync(value*1,500)
+  };
+
+
+```
+
+> **containers/count**
+
+```
+/* eslint-disable no-labels */
+/* eslint-disable no-unused-expressions */
+/* 引入count的Ui组件 */
+import Count from '../../components/Count/index'
+
+import {incrementFnc, decrementFnc, incrementAsyncFnc} from '../../redux/count_action'
+
+/* 引入connect用于连接UI组件与redux */
+import {connect} from 'react-redux'
+/* 
+    1.mapStateToProps函数的返回值是一个对象；
+    2.返回的对象中的key就作为传递给UI组件props的key,value就作为传递给UI组件props的value
+    3.mapStateToProps用于传递状态
+*/
+const mapStateToProps=state=>{
+    return {count:state}
+}
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        increment:num=>dispatch(incrementFnc(num)),
+        decrement:num=>dispatch(decrementFnc(num)),
+        incrementAsync:(num,data)=>dispatch(incrementAsyncFnc(num,data)),
+    }
+}
+/* 使用connect()()创建并暴露一个count的容器组件 */
+export default connect(mapStateToProps,mapDispatchToProps)(Count)
+```
+
+> **App.jsx**
+
+```
+import React, { Component } from 'react'
+import Count from './containers/Count'
+import store from './redux/store'
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                {/* 给容器组件传递store */}
+               <Count store={store}/>
+            </div>
+        )
+    }
+}
 ```
 
