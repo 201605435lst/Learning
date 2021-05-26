@@ -294,3 +294,50 @@ export default class App extends Component {
 }
 ```
 
+> **简写**
+
+```
+const mapStateToProps=state=>{
+    return {count:state}
+}
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        increment:num=>dispatch(incrementFnc(num)),
+        decrement:num=>dispatch(decrementFnc(num)),
+        incrementAsync:(num,data)=>dispatch(incrementAsyncFnc(num,data)),
+    }
+}
+```
+
+```
+export default connect(
+
+state => ({ count: state }),
+
+ {
+  increment: incrementFnc,
+  decrement: decrementFnc,
+  incrementAsync: incrementAsyncFnc,
+}
+)(Count);
+```
+
+> **provider在入口文件中的使用**
+
+```
+import store from "./redux/store";
+
+import { Provider } from "react-redux";
+
+ReactDOM.render(
+
+  <Provider store={store}>
+    <App />
+  </Provider>,
+
+  document.getElementById("root")
+  
+);
+```
+
