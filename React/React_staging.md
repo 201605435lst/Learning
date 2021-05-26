@@ -1170,5 +1170,91 @@ replace是替换，不留下痕迹，没有历史记录
       };
 ```
 
+### 10.14 WithRouter的使用
+
+> * **WithRouter可以加工一般组件，让一般组件具备路由组件所特有的API**
+> * **WithRouter的返回值是一个新组件 **
+
+```
+import {withRouter} from 'react-router-dom'
+class Header extends Component {
+
+    forward=()=>{
+        this.props.history.goForward()
+    }
+    back=()=>{
+        this.props.history.goBack()
+    }
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <h2>React Router Demo</h2>
+        <button onClick={this.forward}>前进</button>
+        <button onClick={this.back}>后退</button>
+      </div>
+    );
+  }
+}
+/*
+ WithRouter可以加工一般组件，让一般组件具备路由组件所特有的API
+ WithRouter的返回值是一个新组件
+*/
+export default withRouter(Header)
+```
+
+### 10.15 BrowserRouter与HashRouter的区别
+
+```
+		1.底层原理不一样：
+					BrowserRouter使用的是H5的history API，不兼容IE9及以下版本。
+					HashRouter使用的是URL的哈希值。
+		2.path表现形式不一样
+					BrowserRouter的路径中没有#,例如：localhost:3000/demo/test
+					HashRouter的路径包含#,例如：localhost:3000/#/demo/test
+		3.刷新后对路由state参数的影响
+					(1).BrowserRouter没有任何影响，因为state保存在history对象中。
+					(2).HashRouter刷新后会导致路由state参数的丢失！！！
+		4.备注：HashRouter可以用于解决一些路径错误相关的问题。
+```
+
+```
+hash值的路径有一个特点，#后面的东西都不会发送给服务器，不认为是请求资源的路径，类似于锚点，刚好形成一个历史记录
+```
+
+##  11.React的按需引入-自定义主题
+
+```
+		1.安装依赖：yarn add react-app-rewired customize-cra babel-plugin-import less less-loader
+		2.修改package.json
+				....
+					"scripts": {
+						"start": "react-app-rewired start",
+						"build": "react-app-rewired build",
+						"test": "react-app-rewired test",
+						"eject": "react-scripts eject"
+					},
+				....
+		3.根目录下创建config-overrides.js
+				//配置具体的修改规则
+				const { override, fixBabelImports,addLessLoader} = require('customize-cra');
+				module.exports = override(
+					fixBabelImports('import', {
+						libraryName: 'antd',
+						libraryDirectory: 'es',
+						style: true,
+					}),
+					addLessLoader({
+						lessOptions:{
+							javascriptEnabled: true,
+							modifyVars: { '@primary-color': 'green' },
+						}
+					}),
+				);
+			4.备注：不用在组件里亲自引入样式了，即：import 'antd/dist/antd.css'应该删掉
+```
+
+
+
 
 
