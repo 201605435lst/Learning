@@ -264,7 +264,11 @@ import {connect} from 'react-redux'
 const mapStateToProps=state=>{
     return {count:state}
 }
-
+/* 
+    1.mapDispatchToProps函数的返回值是一个对象；
+    2.返回的对象中的key就作为传递给UI组件props的key,value就作为传递给UI组件props的value
+    3.mapDispatchToProps用于传递操作状态的方法
+*/
 const mapDispatchToProps=(dispatch)=>{
     return {
         increment:num=>dispatch(incrementFnc(num)),
@@ -339,5 +343,201 @@ ReactDOM.render(
   document.getElementById("root")
   
 );
+```
+
+#### 1.6 React-redux的优化
+
+> **第一步：配置action**
+
+1. **count_action.js**
+
+```
+import { INCREMENT, DECREMENT } from "../constant";
+
+/*为count组件生成action对象  */
+
+/* 同步action，就是指action的值为object类型的一般对象 */
+
+const incrementFnc = (data) => ({ type: INCREMENT, data });
+
+const decrementFnc = (data) => ({ type: DECREMENT, data });
+
+/* 异步action，就是指action的值为函数,异步action中一般都会调用同步action */
+const incrementAsyncFnc = (data, time) => {  
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(incrementFnc(data));
+    }, time);
+  };
+};
+export { incrementFnc, decrementFnc, incrementAsyncFnc };
+
+```
+
+> **第二步：配置reducer**
+
+2. **count_reducer.js**
+
+```
+/* 1、改文件用于创建一个为Count服务的reducer，reducer的本质就是一个函数
+    2、reducer函数会接受到两个参数，分别为：之前的状态（preState）,动作对象（action)
+*/
+import {INCREMENT, DECREMENT} from '../constant'
+const initData=0
+
+export default function countReducer(preState=initData,action) {
+    /* 从action对象中获取type和data */
+    const {type,data}=action
+    switch (type) {
+        case INCREMENT:
+          return preState+data;
+          case DECREMENT:
+            return preState-data;
+        default:
+           return preState;
+    }
+}
+```
+
+> **第三步：store对象**
+
+**3. store.js**
+
+```
+/* 该文件专门用于暴露一个store对象，整个应用只有一个srore对象 */
+//引入createStore，专门用于创建redux中最为核心的store对象
+import {createStore,applyMiddleware,combineReducers} from 'redux'
+
+//引入为Count组件服务的reducer
+import count from './reducer/count'
+
+//引入为People组件服务的reducer
+import {addPerson} from './reducer/person'
+
+/* 引入redux-thunk，用于支持异步action */
+import thunk from 'redux-thunk'
+
+/* 汇总所有的reducer变为一个总的reducer */
+const allReducer=combineReducers({
+    sum:count,
+    peoplelist:addPerson,
+})
+export default createStore(allReducer,applyMiddleware(thunk))
+```
+
+> **第四步:容器使用**
+
+```
+/* eslint-disable no-labels */
+/* eslint-disable no-unused-expressions */
+/* 引入count的Ui组件 */
+
+import React, { Component } from "react";
+
+import {
+    incrementFnc,
+    decrementFnc,
+    incrementAsyncFnc,
+  } from "../../redux/action/count";
+
+/* 引入connect用于连接UI组件与redux */
+import { connect } from "react-redux";
+
+class Count extends Component {
+
+  increment = () => {
+    const { value } = this.selectoption;
+    this.props.increment(value*1)
+  };
+  decrement = () => {
+    const { value } = this.selectoption;
+    this.props.decrement(value*1)
+  };
+  incrementOfAdd =  () => {
+    const { value } = this.selectoption;
+    const {count}=this.props
+    if(count % 2!==0){
+      this.props.increment(value*1)
+    }
+    
+  };
+  incrementOfAsync = () => {
+    const { value } = this.selectoption;
+    this.props.incrementAsync(value*1,500)
+  };
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+      <h2>我是Count组件</h2>
+        <h2>当前求和值为：{this.props.count}</h2>
+        <br />
+        <select ref={(c) => (this.selectoption = c)}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <br />
+        <button onClick={this.increment}>+</button>
+        <button onClick={this.decrement}>-</button>
+        <button onClick={this.incrementOfAdd}>奇数加</button>
+        <button onClick={this.incrementOfAsync}>异步加</button>
+      </div>
+    );
+  }
+}
+
+
+/* 使用connect()()创建并暴露一个count的容器组件 */
+export default connect(
+
+state => ({ count: state }),
+ {
+  increment: incrementFnc,
+  decrement: decrementFnc,
+  incrementAsync: incrementAsyncFnc,
+}
+)(Count);
+
+```
+
+## 2.纯函数和高阶函数
+
+> **纯函数**
+
+```
+1. 一类特别的函数: 只要是同样的输入(实参)，必定得到同样的输出(返回)
+
+2. 必须遵守以下一些约束 
+
+1) 不得改写参数数据
+
+2) 不会产生任何副作用，例如网络请求，输入和输出设备
+
+3) 不能调用Date.now()或者Math.random()等不纯的方法 
+
+3. redux的reducer函数必须是一个纯函数
+```
+
+> **高阶函数**
+
+```
+1. 理解: 一类特别的函数
+
+1) 情况1: 参数是函数
+
+2) 情况2: 返回是函数
+
+2. 常见的高阶函数: 
+
+1) 定时器设置函数
+
+2) 数组的forEach()/map()/filter()/reduce()/find()/bind()
+
+3) promise
+
+4) react-redux中的connect函数
+
+3. 作用: 能实现更加动态, 更加可扩展的功能
 ```
 

@@ -15,7 +15,11 @@ import {connect} from 'react-redux'
 const mapStateToProps=state=>{
     return {count:state}
 }
-
+/* 
+    1.mapDispatchToProps函数的返回值是一个对象；
+    2.返回的对象中的key就作为传递给UI组件props的key,value就作为传递给UI组件props的value
+    3.mapDispatchToProps用于传递操作状态的方法
+*/
 const mapDispatchToProps=(dispatch)=>{
     return {
         increment:num=>dispatch(incrementFnc(num)),
