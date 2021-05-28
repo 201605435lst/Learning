@@ -40,7 +40,8 @@ class Count extends Component {
     return (
       <div>
       <h2>我是Count组件</h2>
-        <h2>当前求和值为：{this.props.count}</h2>
+        <h2>当前求和值为：{this.props.count}</h2><br/>
+        <h2>总人数为{this.props.peoples}</h2>
         <br />
         <select ref={(c) => (this.selectoption = c)}>
           <option value="1">1</option>
@@ -59,10 +60,10 @@ class Count extends Component {
 /* 使用connect()()创建并暴露一个count的容器组件 */
 export default connect(
 
-state => ({ count: state }),
+state => ({ count: state.sum,peoples:state.peoplelist.length }),
  {
   increment: incrementFnc,
   decrement: decrementFnc,
   incrementAsync: incrementAsyncFnc,
-}
+ }
 )(Count);
