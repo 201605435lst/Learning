@@ -11,6 +11,7 @@ import {addPerson} from './reducer/person'
 /* 引入redux-thunk，用于支持异步action */
 import thunk from 'redux-thunk'
 
+import {composeWithDevTools} from 'redux-devtools-extension'
 /*
  汇总所有的reducer变为一个总的reducer 
  combineReducers调用的时候传入的那个对象就是redux里面保存的那个总状态对象 
@@ -19,4 +20,4 @@ const allReducer=combineReducers({
     sum:count,
     peoplelist:addPerson,
 })
-export default createStore(allReducer,applyMiddleware(thunk))
+export default createStore(allReducer,composeWithDevTools(applyMiddleware(thunk)))
