@@ -276,6 +276,69 @@ export default function Demo() {
 
 	在应用开发中一般不用context, 一般都用它的封装react插件
 
+```
+import "./css/css.css";
+import React, { Component } from "react";
+const MyContext = React.createContext();
+const { Provider, Consumer } = MyContext;
+export default class A extends Component {
+  state = { name: "校长", age: 23 };
+  render() {
+    const { name, age } = this.state;
+    return (
+      <div className="a">
+        <h2>我是A组件：我的名字是{name}</h2>
+        <h2>我是A组件：我的年龄是{age}</h2>
+        <Provider value={{ name, age }}>
+          <B />
+        </Provider>
+      </div>
+    );
+  }
+}
+class B extends Component {
+  render() {
+    const { name, age } = this.props;
+    return (
+      <div className="b">
+        <h2>我是B组件：显示A组件的名字是{name}</h2>
+        <h2>我是B组件：显示A组件的年龄是{age}</h2>
+        <C />
+      </div>
+    );
+  }
+}
+class C extends Component {
+  static contextType = MyContext;
+
+  render() {
+    const { name, age } = this.context;
+    return (
+      <div className="c">
+        <h2>我是C组件：显示A组件的名字是{name}</h2>
+        <h2>我是C组件：显示A组件的年龄是{age}</h2>
+        <D />
+      </div>
+    );
+  }
+}
+function D() {
+  return (
+    <Consumer>
+      {(value) => {
+        return (
+          <div className="d">
+            <h2>我是D组件：显示A组件的名字是{value.name}</h2>
+            <h2>我是D组件：显示A组件的年龄是{value.age}</h2>
+          </div>
+        );
+      }}
+    </Consumer>
+  );
+}
+
+```
+
 
 
 <hr/>
@@ -339,6 +402,33 @@ export default function Demo() {
 	A组件: {this.props.render(内部state数据)}
 	C组件: 读取A组件传入的数据显示 {this.props.data} 
 
+```
+export default class Parent extends Component {
+	render() {
+		return (
+			<div className="parent">
+				<h3>我是Parent组件</h3>
+				<A render={(name)=><C name={name}/>}/>
+			</div>
+		)
+	}
+}
+
+class A extends Component {
+	state = {name:'tom'}
+	render() {
+		console.log(this.props);
+		const {name} = this.state
+		return (
+			<div className="a">
+				<h3>我是A组件</h3>
+				{this.props.render(name)}
+			</div>
+		)
+	}
+}
+```
+
 
 
 <hr/>
@@ -347,11 +437,11 @@ export default function Demo() {
 
 #### 理解：
 
-错误边界(Error boundary)：用来捕获后代组件错误，渲染出备用页面
+错误边界(Error boundary)：用来捕获**后代组件**错误，渲染出备用页面
 
 #### 特点：
 
-只能捕获后代组件生命周期产生的错误，不能捕获自己组件产生的错误和其他组件在合成事件、定时器中产生的错误
+只能捕获后代组件**生命周期**产生的错误，不能捕获自己组件产生的错误和其他组件在合成事件、定时器中产生的错误
 
 ##### 使用方式：
 
