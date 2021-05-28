@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Demo from './component/2_Lazy'
+import Demo from './component/5_context'
 export default class App extends Component {
     render() {
         return (
-            <div>
+            <>
                <Demo/>
-            </div>
+            </>
         )
     }
 }

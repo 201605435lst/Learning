@@ -20,6 +20,27 @@
 					要在第二个callback函数中读取
 ```
 
+> 对象
+
+```
+ const {count}=this.state
+/* 更新状态后的回调 */
+ this.setState({count:count+1},()=>{
+   console.log(this.state.count);
+})
+```
+
+
+
+> 函数
+
+```
+  this.setState((state,props)=>{
+            console.log(props);
+            return {count:state.count+55}
+        })
+```
+
 
 
 ------
@@ -32,7 +53,7 @@
 
 ```js
 	//1.通过React的lazy函数配合import()函数动态加载路由组件 ===> 路由组件代码会被分开打包
-	const Login = lazy(()=>import('@/pages/Login'))
+        const Login = lazy(()=>import('@/pages/Login'))
 	
 	//2.通过<Suspense>指定在加载得到路由打包文件前显示一个自定义loading界面
 	<Suspense fallback={<h1>loading.....</h1>}>
@@ -79,6 +100,42 @@
         setXxx(value => newValue): 参数为函数, 接收原本的状态值, 返回新的状态值, 内部用其覆盖原来的状态值
 ```
 
+```
+import React from "react";
+
+
+export default function Demo() {
+
+/*数组的解构赋值*/
+  const [count, changeCount] = React.useState(100);
+
+
+  const [userName, changeUserName] = React.useState("张三");
+  
+  /*不能是箭头函数*/
+  
+  function add() {
+    // changeCount(count+10)  //第一种写法
+    changeCount(count=>count+1) //第二种学法
+  };
+  function name(){
+    changeUserName("李四")
+  }
+  return (
+    <div>
+      <h2>当前的和为:{count}</h2>
+      <br />
+      <h2>当前的名字为:{userName}</h2>
+      <br />
+      <button onClick={add}>点我加10</button>
+      <button onClick={name}>点我改名字</button>
+    </div>
+  );
+}
+```
+
+
+
 #### 4. Effect Hook
 
 ```
@@ -99,7 +156,59 @@
         componentDidMount()
         componentDidUpdate()
     	componentWillUnmount() 
+    	
 ```
+
+> 1. **React.useEffect第二个参数不写，相当于componentDidMount和componentDidUpdate**
+
+```
+  React.useEffect(()=>{
+      console.log("@@@发生变化了");
+  })
+```
+
+> 2. **React.useEffect第二个参数为[]，相当于componentDidMount**
+
+```
+  React.useEffect(()=>{
+      console.log("@@@发生变化了");
+  },[])
+```
+
+> 3. **React.useEffect第二个参数为[stateName]，相当于只监测stateName值的改变**
+
+```
+  React.useEffect(()=>{
+      console.log("@@@发生变化了");
+  },[stateName])
+```
+
+> **函数返回的函数相当于componentWillUnmount**
+
+```
+  /* 需求2：组件挂在会页面的值隔一秒加1 
+  
+  () => {
+    let timer = setInterval(() => {
+      changeCount((count) => count + 1);
+    }, 1000);}函数返回的函数相当于componentWillUnmount
+  
+  */
+  React.useEffect(() => {
+    let timer = setInterval(() => {
+      changeCount((count) => count + 1);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  function unMount() {
+    ReactDOM.unmountComponentAtNode(document.getElementById("root"));
+  }
+```
+
+
 
 #### 5. Ref Hook
 
@@ -288,5 +397,4 @@ componentDidCatch(error, info) {
 		父子组件：props
 		兄弟组件：消息订阅-发布、集中式管理
 		祖孙组件(跨级组件)：消息订阅-发布、集中式管理、conText(开发用的少，封装插件用的多)
-
 
