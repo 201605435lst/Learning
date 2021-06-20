@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <cpn>
+          <button>我是父组件</button>
+      </cpn>
+      <cpn/>
+    </div>
+    <template id="cpn">
+     <div>
+        <div>我是cpn组件</div>
+        <!-- 默认的一个span标签 -->
+        <slot><span>我是默认的span标签</span></slot>
+     </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+        const cpn={
+            template:'#cpn',
+        }
+      new Vue({
+        el: "#app",
+        data: {
+          message: "这是一个列表",
+        },
+        components:{
+            cpn
+        }
+      });
+    </script>
+  </body>
+</html>

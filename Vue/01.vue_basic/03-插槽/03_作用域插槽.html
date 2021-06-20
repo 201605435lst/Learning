@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <cpn></cpn>
+      <hr>
+      <cpn>
+          <template v-slot:default="aa">
+              <ul v-for="(item,index) in aa.datas">
+                  <li>{{index}}=={{item}}</li>
+              </ul>
+          </template>
+      </cpn>
+    </div>
+    <template id="cpn">
+      <div>
+        <slot :datas="infos">
+            <ul>
+              <li v-for="item in infos">{{item}}</li>
+            </ul></slot >
+      </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          message: "这是一个列表",
+        },
+        components: {
+          cpn: {
+            template: "#cpn",
+            data() {
+              return {
+                infos: ["java", "vue", "C#", "C++",'react'],
+              };
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

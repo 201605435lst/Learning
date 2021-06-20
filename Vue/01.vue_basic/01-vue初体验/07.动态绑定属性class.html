@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        background-color: blueviolet;
+      }
+      .line {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div">
+      <h2 v-bind:class="{active:isActive,line:isSize}">{{message}}</h2>
+      <button v-on:click="change">点击切换颜色</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+      new Vue({
+        el: "div",
+        data: {
+          message: "消息",
+          isActive: true,
+          isSize: true,
+        },
+        methods:{
+            change(){
+                this.isActive=!this.isActive;
+                this.isSize=!this.isSize
+            }
+        }
+      });
+    </script>
+  </body>
+</html>
