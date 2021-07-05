@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="FirstMybatis:war exploded">
+    <output-path>$PROJECT_DIR$/../FirstMybatis/target/FirstMybatis</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>FirstMybatis</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FirstMybatis" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/../FirstMybatis/target/FirstMybatis/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="FirstMybatis/web/Web" />
+    </root>
+  </artifact>
+</component>
