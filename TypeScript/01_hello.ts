@@ -60,3 +60,13 @@ class Person{
   readonly name:string ='aaa'
 }
 let person =new Person()
+/* 静态实例只读属性 */
+class Animial{
+  static readonly age:number=33
+}
+let dog=new Animial()
+console.log(Animial.age);
+
+
+
+/* super */
