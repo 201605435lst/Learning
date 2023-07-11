@@ -1,2 +1,4 @@
-package com;public class ThreadDemo02 {
+package com;
+
+public class ThreadDemo02 {
 }
