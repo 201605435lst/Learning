@@ -1,10 +1,10 @@
 package com.synch;
 
 
-public class SynchDemo01 {
+class BuyTicketSynch  {
 
     public static void main(String[] args) {
-        BuyTicket buy = new BuyTicket();
+        BuyTicket2 buy = new BuyTicket2();
         new Thread(buy, "小明").start();
         new Thread(buy, "小力").start();
         new Thread(buy, "小刚").start();
@@ -13,7 +13,7 @@ public class SynchDemo01 {
 
 }
 
-class BuyTicket implements Runnable {
+class BuyTicket2 implements Runnable {
 
     //总票数
     int tickCount = 10;
@@ -29,14 +29,14 @@ class BuyTicket implements Runnable {
     }
 
     //停止买票的条件
-    public void buy() {
+//    synchronized 同步方法，锁的是this
+    public synchronized void buy() {
         if (tickCount <= 0) {
             System.out.println("买票结束");
             flag = false;
             return;
         }
         System.out.println(Thread.currentThread().getName() + "买到了第" + tickCount-- + "张票");
-
     }
 
 }

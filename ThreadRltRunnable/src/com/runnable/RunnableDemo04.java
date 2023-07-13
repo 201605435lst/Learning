@@ -1,4 +1,4 @@
-package com;
+package com.runnable;
 
 //发现问题，多个资源操作同一个资源的情况下，数据紊乱，不安全
 public class RunnableDemo04 implements Runnable {

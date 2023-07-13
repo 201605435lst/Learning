@@ -68,5 +68,5 @@ class Person1 implements RunSports {
 
 ```
  Runnable runnable=()->System.out.println("这是lambda接口");
-        new Thread(runnable).start();
+ new Thread(runnable).start();
 ```

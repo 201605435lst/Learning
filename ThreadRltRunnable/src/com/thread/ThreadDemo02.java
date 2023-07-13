@@ -1,4 +1,4 @@
-package com;
+package com.thread;
 
 import org.apache.commons.io.FileUtils;
 

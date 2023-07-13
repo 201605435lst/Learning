@@ -1,4 +1,4 @@
-package com;
+package com.runnable;
 
 public class RunnableDemo03 implements Runnable {
     @Override
