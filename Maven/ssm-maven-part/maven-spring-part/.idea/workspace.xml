@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aac8a8e9-1508-4e0d-81b7-000b96f5023e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../Executor/src/com/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Executor/src/com/Dog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../.idea/Maven.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-01/maven-javase-project-01.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-01/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/maven-javase-project-02.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/maven-javase-project-03.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/main/java/com/main/java/TestDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/main/resources/log4j.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/test/java/com/TestOne.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/maven-javase-project-parent.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/shop-order/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/shop-order/shop-order.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/shop-user/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../maven-javase-project-parent/shop-user/shop-user.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_01/JavaBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_02/NewUserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_02/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_02/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_02/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/java/com/ioc_03/JavaBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/resources/JDBC.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/resources/spring_02.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/resources/spring_03.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/main/resources/spring_033.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/test/java/com/ioc_02/UserControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/test/java/com/test_02.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-03/src/test/java/com/test_03.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/controller/StudentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/dao/StudentDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/dao/impl/StudentDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/pojo/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/service/StudentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/java/com/cn/service/impl/StudentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/resources/jdbc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/main/resources/student.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-05/src/test/java/test/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/StudentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/config/StudentConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/controller/StudentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/dao/StudentDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/dao/StudentDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/pojo/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/service/StudentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/java/com/cn/service/StudentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/resources/jdbc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-06/src/test/java/test/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/UseAop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/advice/LogAdvice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/config/JavaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/controller/ProxyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/service/CalculateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/main/java/com/cn/service/CalculateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation-07/src/test/java/com/test/SpringAopTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-ioc-annotation/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/main/java/com/study/com_xml_01/HappyComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/main/java/com/study/ioc_05/JavaBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/main/java/com/study/ioc_05/JavaBeanFactoryBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/main/resources/spring-01.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/main/resources/spring-05.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spring-xml-ioc-01/src/test/java/Test01/TestDemo.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="spring-beans.schema" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/maven/apache-maven-3.6.3copy" />
+        <option name="userSettingsFile" value="D:\maven\apache-maven-3.6.3copy\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectId" id="2Wb5cf2v98ELey5lbQPvGY5Imxy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/spring-ioc-annotation-06/src/main/resources" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.14084506" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Learning\Maven\ssm-maven-part\maven-spring-part\spring-ioc-annotation-06\src\main\resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.ioc_02" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.cn.pojo" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TestDemo.Test01">
+    <configuration name="SpringAopTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spring-ioc-annotation-07" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.test" />
+      <option name="MAIN_CLASS_NAME" value="com.test.SpringAopTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDemo.Test01" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spring-xml-ioc-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Test01.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Test01" />
+      <option name="MAIN_CLASS_NAME" value="Test01.TestDemo" />
+      <option name="METHOD_NAME" value="Test01" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test_03.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spring-ioc-annotation-03" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com" />
+      <option name="MAIN_CLASS_NAME" value="com.test_03" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test.testDemo (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spring-ioc-annotation-06" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.test" />
+      <option name="METHOD_NAME" value="testDemo" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test.testDemo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spring-ioc-annotation-05" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.test" />
+      <option name="METHOD_NAME" value="testDemo" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestDemo.Test01" />
+        <item itemvalue="JUnit.SpringAopTest.test" />
+        <item itemvalue="JUnit.test.testDemo (1)" />
+        <item itemvalue="JUnit.test.testDemo" />
+        <item itemvalue="JUnit.test_03.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aac8a8e9-1508-4e0d-81b7-000b96f5023e" name="Changes" comment="" />
+      <created>1696988520361</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1696988520361</updated>
+      <workItem from="1696988521699" duration="71000" />
+      <workItem from="1696988598362" duration="1208000" />
+      <workItem from="1696990041181" duration="2710000" />
+      <workItem from="1697019940253" duration="1268000" />
+      <workItem from="1697095911521" duration="17703000" />
+      <workItem from="1697599973819" duration="10732000" />
+      <workItem from="1698022006879" duration="628000" />
+      <workItem from="1698028989058" duration="595000" />
+      <workItem from="1698133909901" duration="2584000" />
+      <workItem from="1698197851914" duration="3208000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
