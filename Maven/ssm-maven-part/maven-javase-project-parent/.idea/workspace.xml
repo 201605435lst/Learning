@@ -5,30 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="10d499b9-6892-47c7-941d-4ff75882f897" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../Executor/src/com/Cat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Executor/src/com/Dog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../.idea/Maven.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-01/maven-javase-project-01.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-01/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/maven-javase-project-02.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-02/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/maven-javase-project-03.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/main/java/com/main/java/TestDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/main/resources/log4j.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../maven-javase-project-03/src/test/java/com/TestOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-order/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shop-user/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Spring/Aop/spring-aop-annotation/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Spring/Aop/spring-aop-annotation/src/main/java/com/Calculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Spring/Aop/spring-aop-annotation/src/main/java/com/CalculatorImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +51,7 @@
       <option name="presentableId" value="Default" />
       <updated>1696843368029</updated>
       <workItem from="1696843369574" duration="6830000" />
+      <workItem from="1711696840183" duration="20000" />
     </task>
     <servers />
   </component>
@@ -88,6 +68,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
