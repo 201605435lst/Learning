@@ -52,6 +52,13 @@ public class ProxyFactory {
             }
         };
 
+        /*jdk生成代理对象：
+        *参数1：类加载器
+        * 参数2：目标类的接口们
+        * 参数3：具体要进行的代理动作
+        *
+        *
+        * */
         return Proxy.newProxyInstance(classLoader, interfaces, invocationHandler);
     }
 
