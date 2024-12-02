@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linebead.mapper.EmployeeMapper">
+    <select id="queryEmpById" resultType="com.linebead.pojo.Employee">
+        select * from t_emp where emp_id = #{id}
+    </select>
+
+    <!--删除-->
+    <delete id="deleteEmpById">
+        delete from t_emp where emp_id=#{id}
+    </delete>
+
+    <!--更具属性查-->
+    <select id="quaryBySalary" resultType="com.linebead.pojo.Employee">
+        emp_id empId,emp_name empName, emp_salary empSalary from t_emp where emp_salary=#{salary}
+    </select>
+
+    <insert id="insertEmp" useGeneratedKeys="true" keyColumn="emp_id" keyProperty="empId">
+<!--        <selectKey order="AFTER" resultType="string" keyProperty="empId">-->
+<!--            select replace (UUID(),"-","-")-->
+<!--        </selectKey>-->
+        insert into t_emp(emp_id,emp_name,emp_salary) values(#{empId},#{empName},#{empSalary})
+    </insert>
+
+</mapper>

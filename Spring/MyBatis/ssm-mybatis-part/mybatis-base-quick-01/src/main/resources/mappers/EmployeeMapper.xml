@@ -14,7 +14,7 @@
         <!-- #{empId}代表动态传入的参数,并且进行赋值!后面详细讲解 -->
         select emp_id empId,emp_name empName, emp_salary empSalary from
         t_emp where emp_id = #{empId}
-
     </select>
+
 
 </mapper>
