@@ -186,16 +186,16 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     依然沿用mybatis数据库测试脚本！
     ```sql
     CREATE DATABASE `mybatis-example`;
-
+    
     USE `mybatis-example`;
-
+    
     CREATE TABLE `t_emp`(
       emp_id INT AUTO_INCREMENT,
       emp_name CHAR(100),
       emp_salary DOUBLE(10,5),
       PRIMARY KEY(emp_id)
     );
-
+    
     INSERT INTO `t_emp`(emp_name,emp_salary) VALUES("tom",200.33);
     INSERT INTO `t_emp`(emp_name,emp_salary) VALUES("jerry",666.66);
     INSERT INTO `t_emp`(emp_name,emp_salary) VALUES("andy",777.77);
@@ -210,7 +210,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     pom.xml
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
-
+    
     <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
       <modelVersion>4.0.0</modelVersion>  
       <groupId>com.atguigu</groupId>  
@@ -246,7 +246,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
               tx
                 spring-tx  / 6.0.6
                 spring-jdbc / 6.0.6
-
+    
             springmvc
                spring-webmvc 6.0.6
                jakarta.jakartaee-web-api 9.1.0
@@ -257,7 +257,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
                mybatis  / 3.5.11
                mysql    / 8.0.25
                pagehelper / 5.1.11
-
+    
             整合需要
                加载spring容器 spring-web / 6.0.6
                整合mybatis   mybatis-spring x x
@@ -265,7 +265,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
                lombok        lombok / 1.18.26
                logback       logback/ 1.2.3
       -->
-
+    
       <dependencies>
         <!--spring pom.xml依赖-->
         <dependency>
@@ -273,31 +273,31 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
           <artifactId>spring-context</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>jakarta.annotation</groupId>
           <artifactId>jakarta.annotation-api</artifactId>
           <version>${jakarta.annotation-api.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-aop</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-aspects</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-tx</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-jdbc</artifactId>
@@ -317,21 +317,21 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
           <artifactId>spring-webmvc</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>jakarta.platform</groupId>
           <artifactId>jakarta.jakartaee-web-api</artifactId>
           <version>${jakarta.jakartaee-web-api.version}</version>
           <scope>provided</scope>
         </dependency>
-
+    
         <!-- jsp需要依赖! jstl-->
         <dependency>
           <groupId>jakarta.servlet.jsp.jstl</groupId>
           <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
           <version>${jakarta.servlet.jsp.jstl-api.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
@@ -365,40 +365,40 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
           <artifactId>mybatis</artifactId>
           <version>${mybatis.version}</version>
         </dependency>
-
+    
         <!-- MySQL驱动 mybatis底层依赖jdbc驱动实现,本次不需要导入连接池,mybatis自带! -->
         <dependency>
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
           <version>${mysql.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>com.github.pagehelper</groupId>
           <artifactId>pagehelper</artifactId>
           <version>${pagehelper.version}</version>
         </dependency>
-
+    
         <!-- 整合第三方特殊依赖 -->
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-web</artifactId>
           <version>${spring.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.mybatis</groupId>
           <artifactId>mybatis-spring</artifactId>
           <version>${mybatis-spring.version}</version>
         </dependency>
-
+    
         <!-- 日志 ， 会自动传递slf4j门面-->
         <dependency>
           <groupId>ch.qos.logback</groupId>
           <artifactId>logback-classic</artifactId>
           <version>${logback.version}</version>
         </dependency>
-
+    
         <dependency>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
@@ -412,9 +412,9 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
         </dependency>
         
       </dependencies>
-
+    
     </project>
-
+    
     ```
 4.  实体类添加
 
@@ -422,7 +422,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     ```java
     @Data
     public class Employee {
-
+    
         private Integer empId;
         private String empName;
         private Double empSalary;
@@ -444,17 +444,17 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
                 <charset>UTF-8</charset>
             </encoder>
         </appender>
-
+    
         <!-- 设置全局日志级别。日志级别按顺序分别是：TRACE、DEBUG、INFO、WARN、ERROR -->
         <!-- 指定任何一个日志级别都只打印当前级别和后面级别的日志。 -->
         <root level="DEBUG">
             <!-- 指定打印日志的appender，这里通过“STDOUT”引用了前面配置的appender -->
             <appender-ref ref="STDOUT" />
         </root>
-
+    
         <!-- 根据特殊需求指定局部日志级别，可也是包名或全类名。 -->
         <logger name="com.atguigu.mybatis" level="DEBUG" />
-
+    
     </configuration>
     ```
 
@@ -530,10 +530,10 @@ public class ServiceJavaConfig {
     ```java
     //1.读取外部配置文件
     InputStream ips = Resources.getResourceAsStream("mybatis-config.xml");
-
+    
     //2.创建sqlSessionFactory
     SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(ips);
-
+    
     //3.创建sqlSession
     SqlSession sqlSession = sqlSessionFactory.openSession();
     //4.获取mapper代理对象
@@ -569,7 +569,7 @@ public class ServiceJavaConfig {
         -   将SqlSessionFactory实例存储到IoC容器
         -   将Mapper实例存储到IoC容器
             mybatis整合思路理解：
-    mybatis的api实例化需要复杂的过程。
+            mybatis的api实例化需要复杂的过程。
 
     例如，自己实现sqlSessionFactory加入ioc容器：
     ```java
@@ -589,7 +589,7 @@ public class ServiceJavaConfig {
     SqlSessionFactoryBean源码展示(mybatis提供)：
     ```java
     package org.mybatis.spring;
-
+    
     public class SqlSessionFactoryBean
         implements FactoryBean<SqlSessionFactory>, InitializingBean, ApplicationListener<ContextRefreshedEvent> {
         
@@ -641,12 +641,12 @@ public class ServiceJavaConfig {
                 <!--开启resultMap自动映射 -->
                 <setting name="autoMappingBehavior" value="FULL"/>
             </settings>
-
+        
             <typeAliases>
                 <!-- 给实体类起别名 -->
                 <package name="com.atguigu.pojo"/>
             </typeAliases>
-
+        
             <plugins>
                 <plugin interceptor="com.github.pagehelper.PageInterceptor">
                     <!--
@@ -668,7 +668,7 @@ public class ServiceJavaConfig {
         @Configuration
         @PropertySource("classpath:jdbc.properties")
         public class MapperJavaConfig {
-
+        
             @Value("${jdbc.user}")
             private String user;
             @Value("${jdbc.password}")
@@ -689,7 +689,7 @@ public class ServiceJavaConfig {
                 dataSource.setDriverClassName(driver);
                 return dataSource;
             }
-
+    
             /**
              * 配置SqlSessionFactoryBean,指定连接池对象和外部配置文件即可
              * @param dataSource 需要注入连接池对象
@@ -699,18 +699,18 @@ public class ServiceJavaConfig {
             public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource){
                 //实例化SqlSessionFactory工厂
                 SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-
+    
                 //设置连接池
                 sqlSessionFactoryBean.setDataSource(dataSource);
-
+    
                 //设置配置文件
                 //包裹外部配置文件地址对象
                 Resource resource = new ClassPathResource("mybatis-config.xml");
                 sqlSessionFactoryBean.setConfigLocation(resource);
-
+    
                 return sqlSessionFactoryBean;
             }
-
+    
             /**
              * 配置Mapper实例扫描工厂,配置 <mapper <package 对应接口和mapperxml文件所在的包
              * @return
@@ -722,22 +722,22 @@ public class ServiceJavaConfig {
                 mapperScannerConfigurer.setBasePackage("com.atguigu.mapper");
                 return mapperScannerConfigurer;
             }
-
+    
         }
         ```
         问题：
-
+    
         当你在Spring配置类中添加了`sqlSessionFactoryBean`和`mapperScannerConfigurer`配置方法时，可能会导致`@Value`注解读取不到值为null的问题。这是因为`SqlSessionFactoryBean`和`MapperScannerConfigurer`是基于MyBatis框架的配置，它们的初始化顺序可能会导致属性注入的问题。
-
+    
         `SqlSessionFactoryBean`和`MapperScannerConfigurer`在配置类中通常是用来配置MyBatis相关的Bean，例如数据源、事务管理器、Mapper扫描等。这些配置类通常在`@Configuration`注解下定义，并且使用`@Value`注解来注入属性值。
-
+    
         当配置类被加载时，Spring容器会首先处理Bean的定义和初始化，其中包括`sqlSessionFactoryBean`和`mapperScannerConfigurer`的初始化。在这个过程中，如果`@Value`注解所在的Bean还没有被完全初始化，可能会导致注入的属性值为null。
-
+    
         解决方案：
-
+    
         分成两个配置类独立配置，互不影响，数据库提取一个配置类，mybatis提取一个配置类即可解决！
     4.  拆分配置
-
+    
         数据库配置类（DataSourceJavaConfig.java）
         ```java
         @Configuration
@@ -765,14 +765,14 @@ public class ServiceJavaConfig {
                 dataSource.setDriverClassName(driver);
                 return dataSource;
             }
-
+    
         }
         ```
         mybatis配置类（MapperJavaConfig.java）
         ```java
         @Configuration
         public class MapperJavaConfig {
-
+    
             /**
              * 配置SqlSessionFactoryBean,指定连接池对象和外部配置文件即可
              * @param dataSource 需要注入连接池对象
@@ -782,18 +782,18 @@ public class ServiceJavaConfig {
             public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource){
                 //实例化SqlSessionFactory工厂
                 SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-
+    
                 //设置连接池
                 sqlSessionFactoryBean.setDataSource(dataSource);
-
+    
                 //设置配置文件
                 //包裹外部配置文件地址对象
                 Resource resource = new ClassPathResource("mybatis-config.xml");
                 sqlSessionFactoryBean.setConfigLocation(resource);
-
+    
                 return sqlSessionFactoryBean;
             }
-
+    
             /**
              * 配置Mapper实例扫描工厂,配置 <mapper <package 对应接口和mapperxml文件所在的包
              * @return
@@ -805,7 +805,7 @@ public class ServiceJavaConfig {
                 mapperScannerConfigurer.setBasePackage("com.atguigu.mapper");
                 return mapperScannerConfigurer;
             }
-
+    
         }
         ```
 4.  **整合方式2（完全配置类 去掉mybatis-config.xml）**
@@ -825,7 +825,7 @@ public class ServiceJavaConfig {
          */
         @Configuration
         public class MapperJavaConfigNew {
-
+        
             /**
              * 配置SqlSessionFactoryBean,指定连接池对象和外部配置文件即可
              * @param dataSource 需要注入连接池对象
@@ -835,13 +835,13 @@ public class ServiceJavaConfig {
             public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource){
                 //实例化SqlSessionFactory工厂
                 SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-
+        
                 //设置连接池
                 sqlSessionFactoryBean.setDataSource(dataSource);
-
+        
                 //TODO: 替代xml文件的java配置
                 /*
-
+        
                     <settings>
                         <!-- 开启驼峰式映射-->
                         <setting name="mapUnderscoreToCamelCase" value="true"/>
@@ -850,12 +850,12 @@ public class ServiceJavaConfig {
                         <!--开启resultMap自动映射 -->
                         <setting name="autoMappingBehavior" value="FULL"/>
                     </settings>
-
+        
                     <typeAliases>
                         <!-- 给实体类起别名 -->
                         <package name="com.atguigu.pojo"/>
                     </typeAliases>
-
+        
                     <plugins>
                         <plugin interceptor="com.github.pagehelper.PageInterceptor">
                             <!--
@@ -868,30 +868,30 @@ public class ServiceJavaConfig {
                             <property name="helperDialect" value="mysql"/>
                         </plugin>
                     </plugins>
-
+        
                  */
-
+        
                 //settings [包裹到一个configuration对象,切记别倒错包]
                 org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
                 configuration.setMapUnderscoreToCamelCase(true);
                 configuration.setLogImpl(Slf4jImpl.class);
                 configuration.setAutoMappingBehavior(AutoMappingBehavior.FULL);
                 sqlSessionFactoryBean.setConfiguration(configuration);
-
+        
                 //typeAliases
                 sqlSessionFactoryBean.setTypeAliasesPackage("com.atguigu.pojo");
-
+        
                 //分页插件配置
                 PageInterceptor pageInterceptor = new PageInterceptor();
-
+        
                 Properties properties = new Properties();
                 properties.setProperty("helperDialect","mysql");
                 pageInterceptor.setProperties(properties);
                 sqlSessionFactoryBean.addPlugins(pageInterceptor);
-
+        
                 return sqlSessionFactoryBean;
             }
-
+        
             /**
              * 配置Mapper实例扫描工厂,配置 <mapper <package 对应接口和mapperxml文件所在的包
              * @return
@@ -903,7 +903,7 @@ public class ServiceJavaConfig {
                 mapperScannerConfigurer.setBasePackage("com.atguigu.mapper");
                 return mapperScannerConfigurer;
             }
-
+        
         }
         ```
 
@@ -943,10 +943,10 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     @RestController
     @RequestMapping("/employee")
     public class EmployeeController {
-
+    
         @Autowired
         private EmployeeService employeeService;
-
+    
         @GetMapping("list")
         public List<Employee> retList(){
             List<Employee> employees = employeeService.findAll();
@@ -954,16 +954,16 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
             return employees;
         }
     }
-
+    
     ```
 3.  service&#x20;
     ```java
     @Service
     public class EmployeeServiceImpl implements EmployeeService {
-
+    
         @Autowired
         private EmployeeMapper employeeMapper;
-
+    
         /**
          * 查询所有员工信息
          */
@@ -973,17 +973,17 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
             return employeeList;
         }
     }
-
+    
     ```
 4.  mapper
 
     mapper接口  包：com.atguigu.mapper&#x20;
     ```java
     public interface EmployeeMapper {
-
+    
          List<Employee> queryAll();
     }
-
+    
     ```
     mapper XML 文件位置： resources/mappers
     ```xml
@@ -993,12 +993,12 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
             "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
     <mapper namespace="com.atguigu.mapper.EmployeeMapper">
-
+    
         <select id="queryAll" resultType="employee">
             <!-- #{empId}代表动态传入的参数,并且进行赋值!后面详细讲解 -->
             select emp_id empId,emp_name empName, emp_salary empSalary from t_emp
         </select>
-
+    
     </mapper>
     ```
 
@@ -1169,7 +1169,7 @@ npm run dev //运行测试
       completed BOOLEAN NOT NULL,
       PRIMARY KEY (id)
     );
-
+    
     INSERT INTO schedule (title, completed)
     VALUES
         ('学习java', true),
@@ -1192,7 +1192,7 @@ npm run dev //运行测试
         ('学习Kubernetes', false),
         ('学习AWS', true),
         ('学习Azure', false);
-
+    
     ```
 2.  准备pojo
 
@@ -1205,12 +1205,12 @@ npm run dev //运行测试
      */
     @Data
     public class Schedule {
-
+    
         private Integer id;
         private String title;
         private Boolean completed;
     }
-
+    
     ```
 3.  准备 R
 
@@ -1222,11 +1222,11 @@ npm run dev //运行测试
      * description: 返回结果类
      */
     public class R {
-
+    
         private int code = 200; //200成功状态码
-
+    
         private boolean flag = true; //返回状态
-
+    
         private Object data;  //返回具体数据
 
 
@@ -1235,7 +1235,7 @@ npm run dev //运行测试
             r.data = data;
             return r;
         }
-
+    
         public static R  fail(Object data){
             R r = new R();
             r.code = 500; //错误码
@@ -1248,23 +1248,23 @@ npm run dev //运行测试
         public int getCode() {
             return code;
         }
-
+    
         public void setCode(int code) {
             this.code = code;
         }
-
+    
         public boolean isFlag() {
             return flag;
         }
-
+    
         public void setFlag(boolean flag) {
             this.flag = flag;
         }
-
+    
         public Object getData() {
             return data;
         }
-
+    
         public void setData(Object data) {
             this.data = data;
         }
@@ -1283,7 +1283,7 @@ npm run dev //运行测试
         private long total;    // 总数据条数
         private List<T> data;      // 当前页的数据集合
     }
-
+    
     ```
 
 ### 4.2 功能实现
@@ -1299,10 +1299,10 @@ npm run dev //运行测试
         @RestController
         public class ScheduleController
         {
-
+        
             @Autowired
             private ScheduleService scheduleService;
-
+        
             @GetMapping("/{pageSize}/{currentPage}")
             public R showList(@PathVariable(name = "pageSize") int pageSize, @PathVariable(name = "currentPage") int currentPage){
                 PageBean<Schedule> pageBean = scheduleService.findByPage(pageSize,currentPage);
@@ -1315,10 +1315,10 @@ npm run dev //运行测试
         @Slf4j
         @Service
         public class ScheduleServiceImpl  implements ScheduleService {
-
+        
             @Autowired
             private ScheduleMapper scheduleMapper;
-
+        
             /**
              * 分页数据查询,返回分页pageBean
              *
@@ -1336,12 +1336,12 @@ npm run dev //运行测试
                 PageInfo<Schedule> pageInfo = new PageInfo<>(list);
                 //4.pageBean封装
                 PageBean<Schedule> pageBean = new PageBean<>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(),pageInfo.getList());
-
+        
                 log.info("分页查询结果:{}",pageBean);
-
+        
                 return pageBean;
             }
-
+        
         }
         ```
     3.  mapper
@@ -1349,7 +1349,7 @@ npm run dev //运行测试
         mapper接口
         ```java
         public interface ScheduleMapper {
-
+        
             List<Schedule> queryPage();
         }    
         ```
@@ -1361,7 +1361,7 @@ npm run dev //运行测试
                 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
         <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
         <mapper namespace="com.atguigu.mapper.ScheduleMapper">
-
+        
             <select id="queryPage" resultType="schedule">
                 select * from schedule
             </select>

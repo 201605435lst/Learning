@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linebead.mapper.ScheduleMapper">
+
+    <select id="selectAll" resultType="schedule">
+        select * from schedule
+    </select>
+
+    <delete id="delete" >
+        DELETE FROM schedule WHERE id=#{id}
+    </delete>
+
+    <insert id="save">
+        insert into schedule (title,completed) values (#{title},#{completed})
+    </insert>
+
+    <insert id="update">
+        update  schedule set title =#{title} ,completed=#{completed} where id=#{id}
+    </insert>
+
+</mapper>

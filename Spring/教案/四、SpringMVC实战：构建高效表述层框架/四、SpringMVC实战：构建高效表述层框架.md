@@ -130,6 +130,10 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
 
 ![](image/image_tmdw8dA_0q.png)
 
+首先请求先到DispatchServlet,在handlerMapping找对应的请求handler,DispatchServlet通过HandlerAdapter在controller调用hadler
+
+
+
 **SpringMVC涉及组件理解：**
 
 1.  DispatcherServlet :  SpringMVC提供，我们需要使用web.xml配置使其生效，它是整个流程处理的核心，所有请求都经过它的处理和分发！\[ CEO ]
@@ -162,7 +166,7 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
             <maven.compiler.target>17</maven.compiler.target>
             <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
-
+        
         <dependencies>
             <!-- springioc相关依赖  -->
             <dependency>
@@ -170,7 +174,7 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
+        
             <!-- web相关依赖  -->
             <!-- 在 pom.xml 中引入 Jakarta EE Web API 的依赖 -->
             <!--
@@ -185,23 +189,23 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
                 <version>${servlet.api}</version>
                 <scope>provided</scope>
             </dependency>
-
+        
             <!-- springwebmvc相关依赖  -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
+        
         </dependencies>
         ```
 4.  Controller声明
     ```java
     @Controller
     public class HelloController {
-
+    
         //handlers
-
+    
         /**
          * handler就是controller内部的具体方法
          * @RequestMapping("/springmvc/hello") 就是用来向handlerMapping中注册的方法注解!
@@ -214,13 +218,13 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
             return "hello springmvc!!";
         }
     }
-
+    
     ```
 5.  Spring MVC核心组件配置类
     > 声明springmvc涉及组件信息的配置类
     ```java
     //TODO: SpringMVC对应组件的配置类 [声明SpringMVC需要的组件信息]
-
+    
     //TODO: 导入handlerMapping和handlerAdapter的三种方式
      //1.自动导入handlerMapping和handlerAdapter [推荐]
      //2.可以不添加,springmvc会检查是否配置handlerMapping和handlerAdapter,没有配置默认加载
@@ -230,19 +234,19 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
     @ComponentScan(basePackages = "com.atguigu.controller") //TODO: 进行controller扫
     //WebMvcConfigurer springMvc进行组件配置的规范,配置组件,提供各种方法! 前期可以实现
     public class SpringMvcConfig implements WebMvcConfigurer {
-
+    
         @Bean
         public HandlerMapping handlerMapping(){
             return new RequestMappingHandlerMapping();
         }
-
+    
         @Bean
         public HandlerAdapter handlerAdapter(){
             return new RequestMappingHandlerAdapter();
         }
         
     }
-
+    
     ```
 6.  SpringMVC环境搭建
     > 对于使用基于 Java 的 Spring 配置的应用程序，建议这样做，如以下示例所示：
@@ -251,7 +255,7 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
     //TODO: Springmvc框架会自动检查当前类的实现类,会自动加载 getRootConfigClasses / getServletConfigClasses 提供的配置类
     //TODO: getServletMappings 返回的地址 设置DispatherServlet对应处理的地址
     public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
+    
       /**
        * 指定service / mapper层的配置类
        */
@@ -259,7 +263,7 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
       protected Class<?>[] getRootConfigClasses() {
         return null;
       }
-
+    
       /**
        * 指定springmvc的配置类
        * @return
@@ -268,7 +272,7 @@ Spring MVC与许多其他Web框架一样，是围绕前端控制器模式设计�
       protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[] { SpringMvcConfig.class };
       }
-
+    
       /**
        * 设置dispatcherServlet的处理路径!
        * 一般情况下为 / 代表处理所有请求!
@@ -299,7 +303,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     ```java
     @Controller
     public class UserController {
-
+    
         /**
          * 精准设置访问地址 /user/login
          */
@@ -309,7 +313,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
             System.out.println("UserController.login");
             return "login success!!";
         }
-
+    
         /**
          * 精准设置访问地址 /user/register
          */
@@ -321,7 +325,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
         }
         
     }
-
+    
     ```
 2.  **模糊路径匹配**
 
@@ -329,7 +333,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     ```java
     @Controller
     public class ProductController {
-
+    
         /**
          *  路径设置为 /product/*  
          *    /* 为单层任意字符串  /product/a  /product/aaa 可以访问此handler  
@@ -345,7 +349,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
             return "product show!";
         }
     }
-
+    
     ```
     ```text
     单层匹配和多层匹配：
@@ -364,7 +368,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     @RequestMapping("/user/login")
     @RequestMapping("/user/register")
     @RequestMapping("/user/logout")
-
+    
     //2.优化标记类+handler方法
     //类上
     @RequestMapping("/user")
@@ -372,7 +376,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     @RequestMapping("/login")
     @RequestMapping("/register")
     @RequestMapping("/logout")
-
+    
     ```
 4.  **附带请求方式限制**
 
@@ -388,7 +392,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     ```java
     @Controller
     public class UserController {
-
+    
         /**
          * 精准设置访问地址 /user/login
          * method = RequestMethod.POST 可以指定单个或者多个请求方式!
@@ -400,7 +404,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
             System.out.println("UserController.login");
             return "login success!!";
         }
-
+    
         /**
          * 精准设置访问地址 /user/register
          */
@@ -410,7 +414,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
             System.out.println("UserController.register");
             return "register success!!";
         }
-
+    
     }
     ```
     注意：违背请求方式，会出现405异常！！！
@@ -472,7 +476,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
     @Controller
     @RequestMapping("param")
     public class ParamController {
-
+    
         /**
          * 前端请求: http://localhost:8080/param/value?name=xx&age=18
          *
@@ -529,7 +533,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
         System.out.println("name = " + name + ", age = " + age);
         return name+age;
     }
-
+    
     ```
 3.  **特殊场景接值**
     1.  一名多值
@@ -555,11 +559,11 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
         定义一个用于接收参数的实体类：
         ```java
         public class User {
-
+        
           private String name;
-
+        
           private int age = 18;
-
+        
           // getter 和 setter 略
         }
         ```
@@ -568,7 +572,7 @@ SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的�
         @Controller
         @RequestMapping("param")
         public class ParamController {
-
+        
             @RequestMapping(value = "/user", method = RequestMethod.POST)
             @ResponseBody
             public String addUser(User user) {
@@ -637,7 +641,7 @@ public String getUser(@PathVariable Long id,
     @PostMapping("/person")
     @ResponseBody
     public String addPerson(@RequestBody Person person) {
-
+    
       // 在这里可以使用 person 对象来操作 JSON 数据中包含的属性
       return "success";
     }
@@ -659,10 +663,10 @@ public String getUser(@PathVariable Long id,
     -   不支持json数据类型处理
     -   没有json类型处理的工具（jackson）
         解决：
-    springmvc handlerAdpater配置json转化器,配置类需要明确：
+        springmvc handlerAdpater配置json转化器,配置类需要明确：
     ```java
     //TODO: SpringMVC对应组件的配置类 [声明SpringMVC需要的组件信息]
-
+    
     //TODO: 导入handlerMapping和handlerAdapter的三种方式
      //1.自动导入handlerMapping和handlerAdapter [推荐]
      //2.可以不添加,springmvc会检查是否配置handlerMapping和handlerAdapter,没有配置默认加载
@@ -670,7 +674,7 @@ public String getUser(@PathVariable Long id,
     @EnableWebMvc  //json数据处理,必须使用此注解,因为他会加入json处理器
     @Configuration
     @ComponentScan(basePackages = "com.atguigu.controller") //TODO: 进行controller扫描
-
+    
     //WebMvcConfigurer springMvc进行组件配置的规范,配置组件,提供各种方法! 前期可以实现
     public class SpringMvcConfig implements WebMvcConfigurer {
 
@@ -702,11 +706,11 @@ public String getUser(@PathVariable Long id,
         打开源码：org.springframework.web.servlet.config.AnnotationDrivenBeanDefinitionParser
         ```java
         class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
-
+        
           public static final String HANDLER_MAPPING_BEAN_NAME = RequestMappingHandlerMapping.class.getName();
-
+        
           public static final String HANDLER_ADAPTER_BEAN_NAME = RequestMappingHandlerAdapter.class.getName();
-
+        
           static {
             ClassLoader classLoader = AnnotationDrivenBeanDefinitionParser.class.getClassLoader();
             javaxValidationPresent = ClassUtils.isPresent("jakarta.validation.Validator", classLoader);
@@ -726,16 +730,16 @@ public String getUser(@PathVariable Long id,
           public BeanDefinition parse(Element element, ParserContext context) {
             //handlerMapping加入到ioc容器
             readerContext.getRegistry().registerBeanDefinition(HANDLER_MAPPING_BEAN_NAME, handlerMappingDef);
-
+    
             //添加jackson转化器
             addRequestBodyAdvice(handlerAdapterDef);
             addResponseBodyAdvice(handlerAdapterDef);
-
+    
             //handlerAdapter加入到ioc容器
             readerContext.getRegistry().registerBeanDefinition(HANDLER_ADAPTER_BEAN_NAME, handlerAdapterDef);
             return null;
           }
-
+    
           //具体添加jackson转化对象方法
           protected void addRequestBodyAdvice(RootBeanDefinition beanDef) {
             if (jackson2Present) {
@@ -743,14 +747,14 @@ public String getUser(@PathVariable Long id,
                   new RootBeanDefinition(JsonViewRequestBodyAdvice.class));
             }
           }
-
+    
           protected void addResponseBodyAdvice(RootBeanDefinition beanDef) {
             if (jackson2Present) {
               beanDef.getPropertyValues().add("responseBodyAdvice",
                   new RootBeanDefinition(JsonViewResponseBodyAdvice.class));
             }
           }
-
+    
         ```
 
 ### 2.3 接收Cookie数据
@@ -1047,7 +1051,7 @@ public Object handler(简化请求参数接收){
             ${msg}
       </body>
     </html>
-
+    
     ```
 4.  快速响应模版页面
     1.  配置jsp视图解析器
@@ -1055,10 +1059,10 @@ public Object handler(简化请求参数接收){
         @EnableWebMvc  //json数据处理,必须使用此注解,因为他会加入json处理器
         @Configuration
         @ComponentScan(basePackages = "com.atguigu.controller") //TODO: 进行controller扫描
-
+        
         //WebMvcConfigurer springMvc进行组件配置的规范,配置组件,提供各种方法! 前期可以实现
         public class SpringMvcConfig implements WebMvcConfigurer {
-
+        
             //配置jsp对应的视图解析器
             @Override
             public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -1257,7 +1261,7 @@ public @interface RestController {
         @ComponentScan(basePackages = "com.atguigu.controller") //TODO: 进行controller扫描
         //WebMvcConfigurer springMvc进行组件配置的规范,配置组件,提供各种方法! 前期可以实现
         public class SpringMvcConfig implements WebMvcConfigurer {
-
+        
             //配置jsp对应的视图解析器
             @Override
             public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -1560,14 +1564,14 @@ public class UserController {
      * 
      * description: 全局异常处理器,内部可以定义异常处理Handler!
      */
-
+    
     /**
      * @RestControllerAdvice = @ControllerAdvice + @ResponseBody
      * @ControllerAdvice 代表当前类的异常处理controller! 
      */
     @RestControllerAdvice
     public class GlobalExceptionHandler {
-
+    
       
     }
     ```
@@ -1593,7 +1597,7 @@ public class UserController {
         
         return null;
     }
-
+    
     /**
      * 当发生空指针异常会触发此方法!
      * @param e
@@ -1601,10 +1605,10 @@ public class UserController {
      */
     @ExceptionHandler(NullPointerException.class)
     public Object handlerNullException(NullPointerException e){
-
+    
         return null;
     }
-
+    
     /**
      * 所有异常都会触发此方法!但是如果有具体的异常处理Handler! 
      * 具体异常处理Handler优先级更高!
@@ -1615,7 +1619,7 @@ public class UserController {
      */
     @ExceptionHandler(Exception.class)
     public Object handlerException(Exception e){
-
+    
         return null;
     }
     ```
@@ -1673,7 +1677,7 @@ public class UserController {
 1.  创建拦截器类
     ```java
     public class Process01Interceptor implements HandlerInterceptor {
-
+    
         // if( ! preHandler()){return;}
         // 在处理请求的目标 handler 方法前执行
         @Override
@@ -1711,20 +1715,20 @@ public class UserController {
     @ComponentScan(basePackages = {"com.atguigu.controller","com.atguigu.exceptionhandler"}) //TODO: 进行controller扫描
     //WebMvcConfigurer springMvc进行组件配置的规范,配置组件,提供各种方法! 前期可以实现
     public class SpringMvcConfig implements WebMvcConfigurer {
-
+    
         //配置jsp对应的视图解析器
         @Override
         public void configureViewResolvers(ViewResolverRegistry registry) {
             //快速配置jsp模板语言对应的
             registry.jsp("/WEB-INF/views/",".jsp");
         }
-
+    
         //开启静态资源处理 <mvc:default-servlet-handler/>
         @Override
         public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
             configurer.enable();
         }
-
+    
         //添加拦截器
         @Override
         public void addInterceptors(InterceptorRegistry registry) { 
@@ -1743,7 +1747,7 @@ public class UserController {
             //将拦截器添加到Springmvc环境,默认拦截所有Springmvc分发的请求
             registry.addInterceptor(new Process01Interceptor());
         }
-
+        
         ```
     2.  精准配置
         ```java
@@ -1758,7 +1762,7 @@ public class UserController {
             //也支持 /* 和 /** 模糊路径。 * 任意一层字符串 ** 任意层 任意字符串
             registry.addInterceptor(new Process01Interceptor()).addPathPatterns("/common/request/one","/common/request/tow");
         }
-
+        
         ```
     3.  排除配置
         ```java
@@ -1848,7 +1852,7 @@ public class UserController {
         import jakarta.validation.constraints.Email;
         import jakarta.validation.constraints.Min;
         import org.hibernate.validator.constraints.Length;
-
+        
         /**
          * projectName: com.atguigu.pojo
          */
@@ -1856,47 +1860,47 @@ public class UserController {
             //age   1 <=  age < = 150
             @Min(10)
             private int age;
-
+        
             //name 3 <= name.length <= 6
             @Length(min = 3,max = 10)
             private String name;
-
+        
             //email 邮箱格式
             @Email
             private String email;
-
+        
             public int getAge() {
                 return age;
             }
-
+        
             public void setAge(int age) {
                 this.age = age;
             }
-
+        
             public String getName() {
                 return name;
             }
-
+        
             public void setName(String name) {
                 this.name = name;
             }
-
+        
             public String getEmail() {
                 return email;
             }
-
+        
             public void setEmail(String email) {
                 this.email = email;
             }
         }
-
+        
         ```
     -   handler标记和绑定错误收集
         ```java
         @RestController
         @RequestMapping("user")
         public class UserController {
-
+        
             /**
              * @Validated 代表应用校验注解! 必须添加!
              */
